@@ -8,7 +8,7 @@ src = (root / 'app.html').read_text(encoding='utf-8')
 tags = ('<link rel="manifest" href="manifest.webmanifest">\n'
         '<meta name="theme-color" content="#15706a">\n'
         '<script src="config.js"></script>\n'
-        '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>\n'
+        '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>\n'
         '<script src="piattaforma.js"></script>\n')
 i = src.find('<script>')
 assert i > 0, 'script dell\'app non trovato'
