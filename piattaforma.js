@@ -53,7 +53,7 @@ function overlay(html){
     document.head.appendChild(st); }
   ov.hidden=false;
   const logo=document.querySelector('.brand svg');
-  ov.innerHTML=`<div class="pbox"><div class="pbrand">${logo?logo.outerHTML.replace('width="34" height="34"','width="44" height="44"'):''}<div><b>Vingeo</b><small>Quaderno di campagna</small></div></div>${html}</div>`;
+  ov.innerHTML=`<div class="pbox"><div class="pbrand">${logo?logo.outerHTML.replace('width="34" height="34"','width="44" height="44"'):''}<div><b>VinGeo</b><small>Quaderno di campagna</small></div></div>${html}</div>`;
 }
 function chiudiOverlay(){ if(ov){ ov.hidden=true; ov.innerHTML=''; } }
 const $p=s=>ov&&ov.querySelector(s);

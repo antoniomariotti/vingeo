@@ -5,7 +5,8 @@ configurazione, client Supabase e lo strato piattaforma prima dello script dell'
 import pathlib, re, sys
 root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / 'app.html').read_text(encoding='utf-8')
-tags = ('<link rel="manifest" href="manifest.webmanifest">\n'
+tags = ('<link rel="icon" href="icona.svg" type="image/svg+xml">\n'
+        '<link rel="manifest" href="manifest.webmanifest">\n'
         '<meta name="theme-color" content="#15706a">\n'
         '<script src="config.js"></script>\n'
         '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>\n'
