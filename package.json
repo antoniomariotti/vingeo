@@ -1,0 +1,13 @@
+{
+  "name": "vingeo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python3 tools/build.py",
+    "test:db": "node test/rls.test.mjs",
+    "test:e2e": "python3 test/e2e.py"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.2.17"
+  }
+}
