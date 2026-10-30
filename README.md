@@ -40,6 +40,15 @@ Apri l'app, crea l'account, crea l'azienda scegliendo il comune (serve per il me
 
 Per portare dentro i dati della versione personale: **Azienda e utenti → Importa da file JSON**.
 
+### 4. Email (prima di invitare altre persone)
+Il servizio email incluso in Supabase manda messaggi solo ai membri del progetto Supabase e al massimo 2 all'ora. Per gli altri utenti serve un servizio esterno, per esempio [Brevo](https://www.brevo.com) (piano gratuito):
+1. Serve un **dominio tuo** (es. `vingeo.it`, circa 10–15 €/anno): Brevo richiede di autenticare il dominio mittente con i record SPF e DKIM. Lo stesso dominio può fare da indirizzo dell'app al posto di github.io.
+2. In Brevo: *Senders, Domains & Dedicated IPs* → aggiungi e verifica il dominio (copia i record DNS che ti dà nel pannello del registrar) → crea il mittente `no-reply@tuodominio`.
+3. In Brevo: *Settings → SMTP & API → SMTP* → **Generate SMTP key**.
+4. In Supabase: *Authentication → Emails → SMTP Settings* → **Enable custom SMTP**. Host `smtp-relay.brevo.com`, porta `587`, username = email dell'account Brevo, password = chiave SMTP, mittente = `no-reply@tuodominio`, nome = `VinGeo`.
+5. In Supabase: *Authentication → Rate Limits*, alza il limite di email all'ora se serve (con SMTP esterno parte da 30).
+6. Testi delle email in italiano: vedi [docs/email.md](docs/email.md).
+
 ## Sviluppo
 
 ```bash

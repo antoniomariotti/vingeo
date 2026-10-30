@@ -327,6 +327,20 @@ td.fc.l0{background:var(--ok-soft);color:var(--ok)} td.fc.l1{background:var(--wa
 .dcampo{margin-top:12px}
 .dtl{width:100%;min-width:640px;height:auto;display:block}
 details.panel summary{cursor:pointer}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){.g3{grid-template-columns:minmax(0,1fr)}}
+tr.fut td{color:var(--muted)} tr.tot td{border-top:2px solid var(--line)}
+.zbox{touch-action:pan-x pan-y;-webkit-user-select:none;user-select:none}
+.zbox .zin{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.zbox.zoomed{cursor:grab} .zbox.zoomed .zfix{display:none}
+.mapbox img.otile{inset:auto}
+.zin polygon[data-app],.zin path[data-app]{stroke-width:calc(2px * pow(var(--zs,1),-0.85))}
+.zin text.zl{font-size:calc(var(--b,14px) * pow(var(--zs,1),-0.65));stroke-width:calc(3px * pow(var(--zs,1),-0.65))}
+.zin .zsc{transform:scale(calc(pow(var(--zs,1),-0.8)))}
+.ztools{position:absolute;right:8px;bottom:8px;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ztools button{border:0;background:none;width:36px;height:34px;font-size:19px;line-height:1;cursor:pointer;color:var(--fg)}
+.ztools button+button{border-top:1px solid var(--line)}
+.zsel{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px}
 .bol{display:flex;flex-direction:column;gap:10px}
 .bol-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .bol-chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -387,7 +401,7 @@ const UNITA=['kg/ha','L/ha','g/hL','mL/hL'];
 const FORME=['Guyot','Cordone speronato','Tendone (pergola abruzzese)','Tendone superintensivo','Alberello','Spalliera','Altro'];
 const AVV=['Peronospora','Oidio','Botrite','Tignoletta','Cicaline','Erinosi','Acari','Escoriosi','Black rot','Marciume acido','Scaphoideus titanus','Carenze nutrizionali'];
 const DIR=['N','NE','E','SE','S','SO','O','NO'];
-const COLS=['appezzamenti','fenologia','lavorazioni','trattamenti','prodotti','operatori','attrezzature','maturazione','meteo','meteoOre','vigore','particelle','immagini','ortofoto','impostazioni','magazzino','concimazioni','meteoArchivio','rilievi','trappole','catture','bollettini'];
+const COLS=['appezzamenti','fenologia','lavorazioni','trattamenti','prodotti','operatori','attrezzature','maturazione','meteo','meteoOre','vigore','particelle','immagini','ortofoto','impostazioni','magazzino','concimazioni','meteoArchivio','rilievi','trappole','catture','bollettini','vendemmie','manutenzioni','spese'];
 const SERIES=['var(--accent)','var(--must)','var(--grape)','var(--s4)','var(--s5)'];
 
 const IC={
@@ -405,6 +419,8 @@ const IC={
  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></svg>',
  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></svg>',
  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M10.5 7.5c-1.7 0-3 1.3-3 3"/></svg>',
+ crate:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18l-1.6 10.2a1 1 0 0 1-1 .8H5.6a1 1 0 0 1-1-.8z"/><path d="M7.5 13v3.5M12 13v3.5M16.5 13v3.5"/><circle cx="9" cy="5.6" r="1.6"/><circle cx="12.4" cy="5" r="1.6"/><circle cx="15.4" cy="6.2" r="1.6"/></svg>',
+ euro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17.5 6.5A7 7 0 1 0 17.5 17.5"/><path d="M4.5 10.5h9M4.5 13.5h9"/></svg>',
  box:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/><path d="M7.5 5.2 16.5 9.8"/></svg>',
  leaf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.5 4H7.5z"/><path d="M7.5 7 6 21h12L16.5 7"/><path d="M12 17.5c0-3 1.5-5 4-5.5-.2 2.8-1.7 4.8-4 5.5zM12 17.5c0-2.2-1.2-3.8-3.2-4.2.1 2.2 1.3 3.7 3.2 4.2z"/></svg>',
  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>',
@@ -683,7 +699,7 @@ const meteoblueOn=()=>S.meteoOre.length>0;
 /* ===================== render ===================== */
 let renderQ=false;
 function scheduleRender(){if(renderQ)return;renderQ=true;requestAnimationFrame(()=>{renderQ=false;render()})}
-const ROUTES=[['dashboard','Panoramica',IC.dash],['difesa','Difesa e rischi',IC.shield],['monitoraggio','Monitoraggio',IC.eye],['appezzamenti','Appezzamenti',IC.pin],['fenologia','Fenologia',IC.sprout],['lavorazioni','Lavorazioni',IC.tool],['trattamenti','Trattamenti',IC.drop],['concimazione','Concimazione',IC.leaf],['maturazione','Maturazione',IC.grape],['magazzino','Magazzino',IC.box],['operatori-mezzi','Operatori e mezzi',IC.people],['meteo','Meteo',IC.cloud],['impostazioni','Impostazioni',IC.gear]];
+const ROUTES=[['dashboard','Panoramica',IC.dash],['difesa','Difesa e rischi',IC.shield],['monitoraggio','Monitoraggio',IC.eye],['appezzamenti','Appezzamenti',IC.pin],['fenologia','Fenologia',IC.sprout],['lavorazioni','Lavorazioni',IC.tool],['trattamenti','Trattamenti',IC.drop],['concimazione','Concimazione',IC.leaf],['maturazione','Maturazione',IC.grape],['vendemmia','Vendemmia',IC.crate],['magazzino','Magazzino',IC.box],['costi','Costi',IC.euro],['operatori-mezzi','Operatori e mezzi',IC.people],['meteo','Meteo',IC.cloud],['impostazioni','Impostazioni',IC.gear]];
 function renderNav(){
   $('#nav').innerHTML=ROUTES.map(([k,l,i],n)=>({appezzamenti:'<div class="grp">Vigneto</div>',magazzino:'<div class="grp">Magazzino e anagrafiche</div>','operatori-mezzi':ROUTES.some(r=>r[0]==='magazzino')?'':'<div class="grp">Anagrafiche e dati</div>'}[k]||'')+`<a href="#${k}" ${ui.route===k?'aria-current="page"':''}>${i}${l}</a>`).join('');
   $('#sideFoot').innerHTML=(window.vingeoMenuHtml?window.vingeoMenuHtml():esc(settings().nome))+(mode==='local'?'<br><span style="color:var(--warn)">Dati non salvati</span>':'');
@@ -694,10 +710,10 @@ function render(){
   let html='';
   if(mode==='loading'||(db&&loaded.size<COLS.length)) html=`<div class="empty" style="padding-top:80px"><b>Caricamento del vigneto…</b><span>Recupero appezzamenti, trattamenti e rilievi.</span></div>`;
   else {
-    const pages={'operatori-mezzi':pSquadra,dashboard:pDash,difesa:pDifesa,monitoraggio:pMon,magazzino:pMag,concimazione:pConc,appezzamenti:pApp,fenologia:pFen,lavorazioni:pLav,trattamenti:pTr,maturazione:pMat,meteo:pMeteo,impostazioni:pSet};
+    const pages={'operatori-mezzi':pSquadra,dashboard:pDash,difesa:pDifesa,monitoraggio:pMon,vendemmia:pVend,costi:pCosti,magazzino:pMag,concimazione:pConc,appezzamenti:pApp,fenologia:pFen,lavorazioni:pLav,trattamenti:pTr,maturazione:pMat,meteo:pMeteo,impostazioni:pSet};
     html=topBanners()+(pages[ui.route]||pDash)();
   }
-  main.innerHTML=html;
+  main.innerHTML=html; zmApplyAll();
   if(ui.geoEdit) geRefresh();
   if(keep){const el=document.getElementById(keep.id);if(el){el.focus();try{el.setSelectionRange(keep.s,keep.e)}catch(e){}}}
 }
@@ -750,7 +766,7 @@ function pDash(){
   </section>`;
 }
 function dashAlerts(){
-  const L=[...dssAlerts(),...monAlerts(),...magAlerts()]; const now=new Date(), y=now.getFullYear();
+  const L=[...dssAlerts(),...monAlerts(),...magAlerts(),...manAlerts()]; const now=new Date(), y=now.getFullYear();
   for(const r of restrizioni(now)){
     if(r.rieOn) L.push(['crit',`${appCode(r.id)}: rientro vietato`,`fino al ${fDateT(r.rie)} · ${esc(r.rieP)}`]);
     if(r.carOn) L.push(['warn',`${appCode(r.id)}: in intervallo di sicurezza`,`raccolta consentita dal ${fDate(r.car)} · ${esc(r.carP)}`]);
@@ -826,14 +842,14 @@ function mapCard(){
   if(!A.length) return `<div class="empty"><b>Nessun appezzamento collegato al GIS</b><span>Importa i confini da Google Earth (KML/KMZ), da QGIS (Shapefile o GeoJSON) o dal file esportato dal tuo fascicolo, poi abbinali agli appezzamenti.</span>${bAct('import-gis','Importa confini GIS','primary')}</div>`;
   const pts=A.flatMap(a=>geomPts(geoOf(a)));const W=900,H=520;const P=projector(pts,W,H,30);
   const mPerPx=111320/P.sc; let bar=[10,20,50,100,200,500,1000,2000,5000].find(m=>m/mPerPx>=80)||5000; const bpx=bar/mPerPx;
-  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:520px;background:var(--surface-2);border-radius:8px" role="img" aria-label="Mappa degli appezzamenti">`;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mappa degli appezzamenti">`;
   A.forEach(a=>{const g=geoOf(a);const c=baccaCol(a.colore);const [cy,cx]=centro(g);const [lx,ly]=P.f([cx,cy]);
-    s+=`<g data-act="edit-app" data-id="${a.id}" style="cursor:pointer"><path d="${pathOf(g,P)}" fill="${c}" fill-opacity=".28" stroke="${c}" stroke-width="2" fill-rule="evenodd"><title>${esc(a.codice)} · ${esc(a.nome||'')} · ${nf(num(a.geoAreaHa),2)} ha</title></path><text x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--fg)" font-family="var(--f-mono)" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${esc(a.codice)}</text></g>`});
-  s+=`<g transform="translate(20 ${H-22})"><line x1="0" x2="${bpx.toFixed(1)}" y1="0" y2="0" stroke="var(--fg)" stroke-width="2"/><line x1="0" x2="0" y1="-4" y2="4" stroke="var(--fg)" stroke-width="2"/><line x1="${bpx.toFixed(1)}" x2="${bpx.toFixed(1)}" y1="-4" y2="4" stroke="var(--fg)" stroke-width="2"/><text x="${(bpx/2).toFixed(1)}" y="-8" text-anchor="middle" font-size="11" fill="var(--fg)">${bar>=1000?bar/1000+' km':bar+' m'}</text></g>`;
+    s+=`<g data-act="edit-app" data-id="${a.id}" style="cursor:pointer"><path data-app="${a.id}" d="${pathOf(g,P)}" fill="${c}" fill-opacity=".28" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke" fill-rule="evenodd"><title>${esc(a.codice)} · ${esc(a.nome||'')} · ${nf(num(a.geoAreaHa),2)} ha</title></path><text class="zl" style="--b:12px" x="${lx.toFixed(1)}" y="${(ly+4).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--fg)" font-family="var(--f-mono)" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${esc(a.codice)}</text></g>`});
+  s+=`<g class="zfix" transform="translate(20 ${H-22})"><line x1="0" x2="${bpx.toFixed(1)}" y1="0" y2="0" stroke="var(--fg)" stroke-width="2"/><line x1="0" x2="0" y1="-4" y2="4" stroke="var(--fg)" stroke-width="2"/><line x1="${bpx.toFixed(1)}" x2="${bpx.toFixed(1)}" y1="-4" y2="4" stroke="var(--fg)" stroke-width="2"/><text x="${(bpx/2).toFixed(1)}" y="-8" text-anchor="middle" font-size="11" fill="var(--fg)">${bar>=1000?bar/1000+' km':bar+' m'}</text></g>`;
   s+=`<text x="${W-20}" y="30" text-anchor="end" font-size="13" font-weight="700" fill="var(--muted)">N ↑</text></svg>`;
   const allC=[(P.b[1]+P.b[3])/2,(P.b[0]+P.b[2])/2];
   const senza=apps().filter(a=>!geoOf(a));
-  return `<div class="chart-wrap">${s}</div>
+  return `${zmSelect('az')}<div class="mapbox zbox" data-zoom="az" style="aspect-ratio:${W}/${H}"><div class="zin">${s}</div>${zmTools()}</div>
   <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px"><a class="btn small" href="${gmaps(allC,16)}" target="_blank" rel="noopener">Apri in Google Maps (satellite)</a><span class="muted small">Tocca un appezzamento per aprirne la scheda. Lo sfondo satellitare non si può mostrare dentro l'app.</span></div>
   ${senza.length?`<p class="small" style="margin-top:8px"><span class="pill warn">Senza confini</span> ${senza.map(a=>esc(a.codice)).join(', ')}</p>`:''}`;
 }
@@ -1013,8 +1029,8 @@ function appMap(a){
   const path=g?polys(g).map(p=>p.map(r=>'M'+r.map(c=>{const[x,y]=f(c);return x.toFixed(1)+' '+y.toFixed(1)}).join('L')+'Z').join('')).join(''):'';
   const src=view==='aerea'?or.url:im?(view==='ndvi'?im.ndviUrl:im.rgbUrl):'';
   const cap=view==='aerea'?`Foto aerea · © ${esc(or.attribuzione||'Esri')}`:im?`${esc(im.fonte||'Sentinel-2')} · ${fD(im.data)}`:'Foto satellitare non ancora disponibile';
-  return `<div class="mapbox" style="aspect-ratio:${W}/${H}">${src?`<img class="${view}" src="${esc(src)}" alt="${view==='aerea'?'Foto aerea':'Immagine satellitare'} di ${esc(a.codice)}">`:''}
-    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="Confini di ${esc(a.codice)}"><path d="${path}" fill="${src?'none':baccaCol(a.colore)}" fill-opacity=".18" stroke="${src?'#fff':baccaCol(a.colore)}" stroke-width="${src?4:3}" fill-rule="evenodd" vector-effect="non-scaling-stroke"/>${src?`<path d="${path}" fill="none" stroke="#111" stroke-opacity=".5" stroke-width="1" vector-effect="non-scaling-stroke"/>`:''}</svg>
+  return `<div class="mapbox zbox" data-zoom="app-${a.id}" style="aspect-ratio:${W}/${H}"><div class="zin">${src?`<img class="${view}" src="${esc(src)}" alt="${view==='aerea'?'Foto aerea':'Immagine satellitare'} di ${esc(a.codice)}">`:''}
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="Confini di ${esc(a.codice)}"><path d="${path}" fill="${src?'none':baccaCol(a.colore)}" fill-opacity=".18" stroke="${src?'#fff':baccaCol(a.colore)}" stroke-width="${src?4:3}" fill-rule="evenodd" vector-effect="non-scaling-stroke"/>${src?`<path d="${path}" fill="none" stroke="#111" stroke-opacity=".5" stroke-width="1" vector-effect="non-scaling-stroke"/>`:''}</svg></div>${zmTools()}
     ${im||or?`<div class="map-tools">${or?`<button class="${view==='aerea'?'on':''}" data-act="maplayer" data-v="aerea">Aerea</button>`:''}${im?`<button class="${view==='rgb'?'on':''}" data-act="maplayer" data-v="rgb">Satellite</button>`:''}${im&&im.ndviUrl?`<button class="${view==='ndvi'?'on':''}" data-act="maplayer" data-v="ndvi">NDVI</button>`:''}</div>`:''}
     <span class="map-cap">${cap}</span></div>
    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">${g?`<a class="btn small" href="${gmaps(centro(g))}" target="_blank" rel="noopener">Apri in Google Maps</a>`:''}${view==='ndvi'?'<span class="ndvi-legend"><i></i><span>basso</span><span>alto</span></span>':''}</div>`;
@@ -1129,13 +1145,15 @@ function pFen(){
   <div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Fase</th><th>BBCH</th><th class="num">Avanzamento</th><th>Rilevatore</th><th>Note</th><th></th></tr></thead><tbody>
   ${recs.map(r=>`<tr><td class="mono">${fD(r.data)}</td><td><span class="pill acc">${esc(faseLab(r.fase))}</span>${ex(r)}</td><td class="mono">${esc(FASI[faseIdx(r.fase)]?.[2]||'—')}</td><td class="num">${r.perc!=null&&r.perc!==''?esc(r.perc)+'%':'—'}</td><td>${esc(r.rilevatore||'—')}</td><td class="small">${esc(r.note||'—')}</td><td class="act">${iAct('edit-fen',IC.edit,'Modifica',`data-id="${r.id}"`)}${iAct('ask-del-fen',IC.trash,'Elimina',`data-id="${r.id}"`)}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty"><b>Nessun rilievo per ${esc(appCode(ui.fenApp))} nel ${ui.fenYear}</b><span>Registra la fase osservata e la percentuale di piante che l'ha raggiunta.</span></div></td></tr>`}
   </tbody></table></div>
+  <section class="card"><div class="card-h"><h2>Calendario delle fasi · ${esc(appCode(ui.fenApp))} ${ui.fenYear}</h2><span class="muted small">rilevate e stimate</span></div>${fenCalendarioHtml(appBy(ui.fenApp),+ui.fenYear)}</section>
   <section class="card"><div class="card-h"><h2>Confronto tra appezzamenti · ${ui.fenYear}</h2><span class="muted small">ogni punto è un rilievo</span></div>${fenChart()}</section>`
   :`<div class="card empty"><b>Prima aggiungi gli appezzamenti</b><a class="btn small" href="#appezzamenti">Vai agli appezzamenti</a></div>`);
 }
 function fenChart(){
   const A=apps(), y=+ui.fenYear;
   const recs=S.fenologia.filter(f=>f.data&&+f.data.slice(0,4)===y);
-  if(!recs.length) return `<div class="empty"><span>Nessun rilievo nell'annata ${y}.</span></div>`;
+  const RR=dss(); const proi=RR.vuoto?{}:Object.fromEntries(A.map(a=>[a.id,calendarioFasi(a,y,RR).filter(c=>c.tipo!=='rilevata')]));
+  if(!recs.length&&!Object.values(proi).some(x=>x.length)) return `<div class="empty"><span>Nessun rilievo nell'annata ${y}.</span></div>`;
   const x0=new Date(y,2,1), x1=new Date(y,9,31); const L=120,R=20,Wd=860,rowH=34,top=28;
   const H=top+A.length*rowH+10; const sx=d=>L+(parseD(d)-x0)/(x1-x0)*(Wd-L-R);
   const months=['mar','apr','mag','giu','lug','ago','set','ott'];
@@ -1145,6 +1163,7 @@ function fenChart(){
     s+=`<text x="0" y="${cy+4}" font-size="12" fill="var(--fg)" font-family="var(--f-mono)">${esc(a.codice)}</text><line x1="${L}" x2="${Wd-R}" y1="${cy}" y2="${cy}" stroke="var(--line)" stroke-dasharray="2 4"/>`;
     const rr=recs.filter(r=>r.appId===a.id).sort((p,q)=>p.data.localeCompare(q.data));
     if(rr.length>1) s+=`<polyline fill="none" stroke="var(--accent)" stroke-width="2" opacity=".5" points="${rr.map(r=>`${sx(r.data).toFixed(1)},${cy}`).join(' ')}"/>`;
+    (proi[a.id]||[]).forEach(c=>{const xx=sx(c.data);if(xx<L||xx>Wd-R)return;s+=`<circle cx="${xx.toFixed(1)}" cy="${cy}" r="8" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="2 2"><title>${esc(a.codice)} · ≈ ${fD(c.data)} · ${esc(faseLab(c.fase))} (${FONTE_FASE[c.tipo]})</title></circle><text x="${xx.toFixed(1)}" y="${cy+3.5}" text-anchor="middle" font-size="9.5" fill="var(--muted)">${esc(c.fase)}</text>`});
     rr.forEach(r=>{const xx=sx(r.data);if(xx<L||xx>Wd-R)return;s+=`<circle cx="${xx.toFixed(1)}" cy="${cy}" r="9" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"><title>${esc(a.codice)} · ${fD(r.data)} · ${esc(faseLab(r.fase))}</title></circle><text x="${xx.toFixed(1)}" y="${cy+4}" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--accent)">${esc(r.fase)}</text>`});
   });
   return `<div class="chart-wrap">${s}</svg></div>`;
@@ -1230,8 +1249,8 @@ function pSquadra(){
   <section class="card"><div class="card-h"><h2>Mezzi</h2>${bAct('new-att','+ Mezzo','primary small')}</div>
   <p class="muted small" style="margin-bottom:12px">Trattori, irroratrici e attrezzi. Il controllo funzionale si segue solo per le macchine irroratrici.</p>
   <div class="tbl-wrap"><table style="min-width:760px"><thead><tr><th>Mezzo</th><th>Tipo</th><th class="num">Anno</th><th>Targa</th><th class="num">Ore motore</th><th>Controllo funzionale</th><th></th></tr></thead><tbody>
-  ${mez.map(a=>{const irr=IRRORATRICI.includes(a.tipo);const s=statoCF(a,irr);return`<tr><td><b>${esc(a.nome)}</b>${ex(a)}</td><td>${esc(a.tipo||'—')}</td><td class="num">${esc(a.anno||'—')}</td><td class="mono">${esc(a.targa||'—')}</td><td class="num">${a.ore!=null&&a.ore!==''?nf(num(a.ore),0)+' h':'—'}${a.ore!=null&&a.oreData?`<div class="muted small">al ${fD(a.oreData)}</div>`:''}</td><td>${s?`<span class="pill ${s.cls}">${s.txt}</span>${a.controllo?`<div class="muted small">ultimo ${fD(a.controllo)}</div>`:''}`:'<span class="muted small">Non richiesto</span>'}</td><td class="act">${iAct('edit-att',IC.edit,'Modifica',`data-id="${a.id}"`)}${iAct('ask-del-att',IC.trash,'Elimina',`data-id="${a.id}"`)}</td></tr>`}).join('')||`<tr><td colspan="7"><div class="empty"><b>Nessun mezzo</b><span>Aggiungi trattori, atomizzatori e attrezzi che usi in vigna.</span></div></td></tr>`}
-  </tbody></table></div></section>`;
+  ${mez.map(a=>{const irr=IRRORATRICI.includes(a.tipo);const s=statoCF(a,irr);return`<tr><td><b>${esc(a.nome)}</b>${ex(a)}</td><td>${esc(a.tipo||'—')}</td><td class="num">${esc(a.anno||'—')}</td><td class="mono">${esc(a.targa||'—')}</td><td class="num">${(()=>{const oa=oreMezzo(a); return oa?`${nf(oa.ore,0)} h<div class="muted small">${oa.agg?`stimate (lettura ${fD(oa.dal)})`:`al ${fD(oa.dal)}`}</div>`:'—'})()}</td><td>${s?`<span class="pill ${s.cls}">${s.txt}</span>${a.controllo?`<div class="muted small">ultimo ${fD(a.controllo)}</div>`:''}`:'<span class="muted small">Non richiesto</span>'}</td><td class="act">${iAct('edit-att',IC.edit,'Modifica',`data-id="${a.id}"`)}${iAct('ask-del-att',IC.trash,'Elimina',`data-id="${a.id}"`)}</td></tr>`}).join('')||`<tr><td colspan="7"><div class="empty"><b>Nessun mezzo</b><span>Aggiungi trattori, atomizzatori e attrezzi che usi in vigna.</span></div></td></tr>`}
+  </tbody></table></div></section>${manSezione()}`;
 }
 function trRame(){
   const y=new Date().getFullYear(); const A=apps();
@@ -1341,7 +1360,7 @@ function formApp(a={}){
    ${fld('Varietà',inp('varieta',a.varieta,'required list="dl_var"'))}${fld('Bacca',`<select name="colore" id="f_colore">${opts([['bianca','Bianca'],['rossa','Rossa']],a.colore||'bianca')}</select>`)}${fld('Superficie (ha)',inp('ettari',a.ettari,'required inputmode="decimal" placeholder="1,20"'))}
    ${fld('Anno d\'impianto',inp('anno',a.anno,'inputmode="numeric"'))}${fld('Clone',inp('clone',a.clone))}${fld('Portinnesto',inp('portinnesto',a.portinnesto,'list="dl_pi"'))}
    ${fld('Forma di allevamento',`<select name="forma" id="f_forma">${opts(FORME,a.forma,'—')}</select>`)}${fld('Sesto (m)',inp('sesto',a.sesto,'placeholder="2,50 × 0,90"'))}${fld('Comune',inp('comune',a.comune))}
-   ${fld('Foglio',inp('foglio',a.foglio))}${fld('Particella',inp('particella',a.particella))}${fld('Note',`<textarea name="note" id="f_note">${esc(a.note||'')}</textarea>`,'wall')}
+   ${fld('Foglio',inp('foglio',a.foglio))}${fld('Particella',inp('particella',a.particella))}${fld('Resa massima disciplinare (t/ha)',inp('resaMax',a.resaMax,'inputmode="decimal" placeholder="es. 14"'))}${fld('Note',`<textarea name="note" id="f_note">${esc(a.note||'')}</textarea>`,'wall')}
   </div>${(()=>{const g=geoOf(a);if(!g)return a.id?`<div class="preview"><b>Confini GIS</b><span class="muted">Nessun confine collegato. Usa "Importa GIS" nella pagina Appezzamenti.</span></div>`:'';return `<div class="preview"><div style="display:flex;gap:12px;align-items:center">${shapeSVG(g,90,56,baccaCol(a.colore))}<div><b>Confini GIS: ${esc(a.geoNome||'')}</b><div class="muted">${esc(a.geoFonte||'')}${a.geoData?' · importato il '+fD(a.geoData):''}</div><div class="mono">${nf(num(a.geoAreaHa),4)} ha da GIS</div></div></div><div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><a href="${gmaps(centro(g))}" target="_blank" rel="noopener">Apri in Google Maps</a><label class="chip"><input type="checkbox" name="geoUseArea" value="1">Usa la superficie GIS</label><label class="chip"><input type="checkbox" name="geoRemove" value="1">Scollega i confini</label></div></div>`})()}<datalist id="dl_var">${['Chardonnay','Montepulciano','Trebbiano abruzzese','Pecorino','Passerina','Cococciola','Malvasia','Sangiovese','Merlot','Cabernet Sauvignon','Moscato','Falanghina'].map(v=>`<option value="${v}">`).join('')}</datalist><datalist id="dl_pi">${['Kober 5BB','SO4','1103 Paulsen','140 Ruggeri','420A','779 Paulsen','110 Richter'].map(v=>`<option value="${v}">`).join('')}</datalist></div>${dlgFoot()}</form>`);
 }
 function formFen(r={},multi=false){
@@ -1374,7 +1393,7 @@ function formProd(p={}){
    ${fld('N. registrazione Min. Salute',inp('reg',p.reg,'placeholder="solo fitofarmaci"'))}${fld('Sostanza attiva',inp('sostanza',p.sostanza))}${fld('Concentrazione (%)',inp('perc',p.perc,'inputmode="decimal"'))}
    ${fld('Intervallo di sicurezza (gg)',inp('carenza',p.carenza,'inputmode="numeric"'))}${fld('Tempo di rientro (h)',inp('rientro',p.rientro,'inputmode="numeric"'))}${fld('Biologico',`<select name="bio" id="f_bio">${opts([['si','Ammesso'],['restrizioni','Ammesso con limiti'],['no','Non ammesso']],p.bio,'—')}</select>`)}
    ${fld('Rame metallo (%)',inp('rame',p.rame,'inputmode="decimal" placeholder="solo rameici"'))}${fld('Dose minima',inp('doseMin',p.doseMin,'inputmode="decimal"'))}${fld('Dose massima',inp('doseMax',p.doseMax,'inputmode="decimal"'))}
-   ${fld('Unità della dose',`<select name="unita" id="f_unita">${opts(UNITA,p.unita||'kg/ha')}</select>`)}${fld('Max interventi l\'anno',inp('maxInt',p.maxInt,'inputmode="numeric"'))}
+   ${fld('Unità della dose',`<select name="unita" id="f_unita">${opts(UNITA,p.unita||'kg/ha')}</select>`)}${fld('Prezzo (€/kg o €/L)',inp('prezzo',p.prezzo,'inputmode="decimal" placeholder="se non registri gli acquisti"'))}${fld('Max interventi l\'anno',inp('maxInt',p.maxInt,'inputmode="numeric"'))}
    <div class="field wall"><span>Difesa: contro cosa agisce</span><div class="chips">${DIS.map(([k,n])=>`<label class="chip"><input type="checkbox" name="bersagli" value="${k}" ${(p.bersagli||[]).includes(k)?'checked':''}>${n}</label>`).join('')}</div><span class="muted small" id="f_dssauto">${(()=>{const pr=propProdotto({...p,bersagli:null,azione:null,persistenza:null,dilavamento:null});return pr&&pr.riconosciuto?`Riconosciuto dalla sostanza attiva: ${DIS.filter(([k])=>pr.bers[k]).map(([,n])=>n.toLowerCase()).join(', ')||'—'} · ${pr.azione} · ${pr.pers} giorni${pr.wash?` · si dilava con ${pr.wash} mm`:''}. Lascia vuoto per usare questi valori.`:'Sostanza non riconosciuta: indica contro cosa agisce, così i modelli di difesa ne tengono conto.'})()}</span></div>
    ${fld('Azione',`<select name="azione" id="f_azione">${opts([['contatto','Di copertura (contatto)'],['citotropico','Citotropico'],['translaminare','Translaminare'],['sistemico','Sistemico']],p.azione,'Automatica')}</select>`)}${fld('Persistenza (giorni)',inp('persistenza',p.persistenza,'inputmode="numeric" placeholder="auto"'))}${fld('Si dilava con (mm)',inp('dilavamento',p.dilavamento,'inputmode="numeric" placeholder="solo copertura"'))}
    <div class="field wall"><span>Titolo (solo concimi e ammendanti, % sul prodotto)</span></div>
@@ -1386,13 +1405,13 @@ function formProd(p={}){
 function formOp(o={}){
   openModal(`<form data-form="op" data-id="${o.id||''}">${dlgHead(o.id?'Modifica operatore':'Nuovo operatore')}<div class="dlg-b"><div class="fg">
    ${fld('Nome e cognome',inp('nome',o.nome,'required'),'w2')}${fld('Ruolo',`<select name="ruolo" id="f_ruolo">${opts(['Titolare','Operatore','Stagionale','Consulente','Contoterzista'],o.ruolo)}</select>`)}
-   ${fld('N. patentino',inp('patentino',o.patentino))}${fld('Data di rilascio',inp('rilascio',o.rilascio,'type="date"'))}${fld('Scadenza',inp('scadenza',o.scadenza,'type="date"'))}</div>
+   ${fld('Costo orario (€/h)',inp('costoOra',o.costoOra,'inputmode="decimal" placeholder="facoltativo"'))}${fld('N. patentino',inp('patentino',o.patentino))}${fld('Data di rilascio',inp('rilascio',o.rilascio,'type="date"'))}${fld('Scadenza',inp('scadenza',o.scadenza,'type="date"'))}</div>
    <p class="muted small">Patentino solo per chi distribuisce fitofarmaci. Se lasci vuota la scadenza, viene calcolata a 5 anni dal rilascio.</p></div>${dlgFoot()}</form>`,true);
 }
 function formAtt(a={}){
   openModal(`<form data-form="att" data-id="${a.id||''}">${dlgHead(a.id?'Modifica mezzo':'Nuovo mezzo')}<div class="dlg-b"><div class="fg">
    ${fld('Marca e modello',inp('nome',a.nome,'required placeholder="es. Fiatagri 70-66 LP, Atomizzatore 1000 L"'),'w2')}${fld('Tipo',`<select name="tipo" id="f_tipo">${opts(TIPI_MEZZO,a.tipo||'Trattore gommato')}</select>`)}
-   ${fld('Anno',inp('anno',a.anno,'inputmode="numeric" placeholder="es. 1988"'))}${fld('Targa',inp('targa',a.targa,'placeholder="es. CH40314, senza targa"'))}${fld('Ore motore',inp('ore',a.ore,'inputmode="decimal"'))}${fld('Ore lette il',inp('oreData',a.oreData||today(),'type="date"'))}
+   ${fld('Anno',inp('anno',a.anno,'inputmode="numeric" placeholder="es. 1988"'))}${fld('Targa',inp('targa',a.targa,'placeholder="es. CH40314, senza targa"'))}${fld('Ore motore',inp('ore',a.ore,'inputmode="decimal"'))}${fld('Ore lette il',inp('oreData',a.oreData||today(),'type="date"'))}${fld('Costo orario (€/h)',inp('costoOra',a.costoOra,'inputmode="decimal" placeholder="gasolio, usura, ammortamento"'))}
    ${fld('Ultimo controllo funzionale',inp('controllo',a.controllo,'type="date"'))}${fld('Scadenza del controllo',inp('scadenza',a.scadenza,'type="date"'))}<label class="chip wall" style="justify-self:start"><input type="checkbox" name="cfScaduto" ${a.cfScaduto?'checked':''}>Controllo scaduto, data non nota</label></div><p class="muted small">Le date del controllo funzionale servono solo per atomizzatori e irroratrici. Dal 2021 il controllo vale 3 anni (D.Lgs. 150/2012, art. 12).</p></div>${dlgFoot()}</form>`,true);
 }
 function formMat(r={}){
@@ -1474,7 +1493,7 @@ function showHist(t){
 /* ===================== salvataggi ===================== */
 async function submitForm(form){
   const k=form.dataset.form, id=form.dataset.id||null, fd=new FormData(form); const o=Object.fromEntries(fd.entries());
-  const old=id?(S[{app:'appezzamenti',fen:'fenologia',lav:'lavorazioni',prod:'prodotti',op:'operatori',att:'attrezzature',mat:'maturazione',meteo:'meteo',tr:'trattamenti',mov:'magazzino',conc:'concimazioni',concpar:'appezzamenti'}[k]]||[]).find(x=>x.id===id):null;
+  const old=id?(S[{app:'appezzamenti',fen:'fenologia',lav:'lavorazioni',prod:'prodotti',op:'operatori',att:'attrezzature',mat:'maturazione',meteo:'meteo',tr:'trattamenti',mov:'magazzino',conc:'concimazioni',concpar:'appezzamenti',vend:'vendemmie',man:'manutenzioni',spesa:'spese',ril:'rilievi',trap:'trappole',catt:'catture'}[k]]||[]).find(x=>x.id===id):null;
   const keep=old&&old.esempio?{esempio:true}:{};
   if(k==='set'){ await put('impostazioni','main',{...settings(),nome:o.nome.trim()||'La mia azienda',inizio:o.inizio}); ui.lavYear=null;ui.expYear=null; toast('Impostazioni salvate'); return; }
   if(k==='app'){ if(num(o.ettari)==null) return toast('Indica la superficie in ettari'); const rec={...(old||{}),...keep,...o,ettari:num(o.ettari)}; if(o.geoUseArea&&old&&old.geoAreaHa!=null) rec.ettari=num(old.geoAreaHa); delete rec.geoUseArea; delete rec.geoRemove; if(o.geoRemove){['geoJson','geoAreaHa','geoNome','geoFonte','geoProps','geoData'].forEach(k=>delete rec[k])} await put('appezzamenti',id,rec); }
@@ -1491,7 +1510,7 @@ async function submitForm(form){
   }
   else if(k==='prod'){ const rec={...(old||{}),...keep,...o,verificato:!!o.verificato,bersagli:fd.getAll('bersagli')}; delete rec.id; await put('prodotti',id,rec); }
   else if(k==='op'){ let sc=o.scadenza; if(!sc&&o.rilascio){const d=parseD(o.rilascio);d.setFullYear(d.getFullYear()+5);sc=isoDay(d)} await put('operatori',id,{...keep,...o,scadenza:sc}); }
-  else if(k==='att'){ await put('attrezzature',id,{...(old||{}),...keep,...o,ore:num(o.ore),cfScaduto:!!o.cfScaduto&&!o.scadenza,scadenzaStimata:!!(old&&old.scadenzaStimata&&old.scadenza===o.scadenza)}); }
+  else if(k==='att'){ await put('attrezzature',id,{...(old||{}),...keep,...o,ore:num(o.ore),costoOra:num(o.costoOra),cfScaduto:!!o.cfScaduto&&!o.scadenza,scadenzaStimata:!!(old&&old.scadenzaStimata&&old.scadenza===o.scadenza)}); }
   else if(k==='mov'){ if(num(o.qta)==null) return toast('Indica la quantità');
     const rec={prodId:o.prodId,data:o.data,tipo:form.dataset.v||(old&&old.tipo)||'carico',qta:num(o.qta),unita:o.unita,lotto:o.lotto||'',fornitore:o.fornitore||'',documento:o.documento||'',costo:num(o.costo),motivo:o.motivo||'',note:o.note||''};
     await put('magazzino',id,rec);
@@ -1500,8 +1519,13 @@ async function submitForm(form){
     const L=lines.map(l=>{const p=prodBy(l.prodId)||{};return {prodId:l.prodId,dose:l.dose,unita:l.unita,volume:l.volume,snap:{nome:p.nome,categoria:p.categoria,titoloN:p.titoloN,titoloP:p.titoloP,titoloK:p.titoloK,titoloMg:p.titoloMg,effN:p.effN}}});
     await put('concimazioni',id,{data:o.data,modalita:o.modalita,volume:num(o.volume),appIds,haTot:Math.round(sum(appIds,a=>num((appBy(a)||{}).ettari))*10000)/10000,prodotti:L,...opMezzoData(fd),note:o.note||''}); ui.concYear=+o.data.slice(0,4); }
   else if(k==='concpar'){ const a=appBy(id); if(!a) return; const rec={...a,conc:{prodAttesa:num(o.prodAttesa),anniImpianto:num(o.anniImpianto),tessitura:o.tessitura||'franco',soPerc:num(o.soPerc),pOlsen:num(o.pOlsen),kScamb:num(o.kScamb),calcareAttivo:num(o.calcareAttivo),so:o.so||'',dotP:o.dotP||'',dotK:o.dotK||'',ammendanti:!!o.ammendanti,calcare:!!o.calcare,dilavamento:!!o.dilavamento}}; delete rec.id; await put('appezzamenti',id,rec); }
+  else if(k==='vend'){ if(num(o.quintali)==null) return toast('Indica i quintali');
+    await put('vendemmie',id,{appId:o.appId,data:o.data,quintali:num(o.quintali),grado:num(o.grado),unitaGrado:o.unitaGrado,acidita:num(o.acidita),ph:num(o.ph),raccolta:o.raccolta,destinazione:(o.destinazione||'').trim(),documento:o.documento||'',prezzo:num(o.prezzo),ore:num(o.ore),parziale:!!o.parziale,note:o.note||''}); ui.vendYear=+o.data.slice(0,4); }
+  else if(k==='man'){ await put('manutenzioni',id,{mezzoId:o.mezzoId,data:o.data,tipo:o.tipo,ore:num(o.ore),costo:num(o.costo),intervalloOre:num(o.intervalloOre),prossimaData:o.prossimaData||'',officina:o.officina||'',note:o.note||''}); }
+  else if(k==='spesa'){ if(num(o.importo)==null) return toast('Indica l\'importo'); await put('spese',id,{voce:o.voce,data:o.data,importo:num(o.importo),appId:o.appId||'',note:o.note||''}); ui.costYear=+o.data.slice(0,4); }
+  else if(k==='costopar'){ await put('impostazioni','main',{...settings(),costoOra:num(o.costoOra)}); toast('Costo orario salvato'); return; }
   else if(k==='ril'){ let appId=o.appId; const p=monUi.pos; if(!appId&&p){const m=appDaPunto(p.lat,p.lon); if(m) appId=m.id}
-    await put('rilievi',id,{data:o.data,appId:appId||'',tipo:o.tipo,organo:o.organo||'',intensita:num(o.intensita),diffusione:num(o.diffusione),note:o.note||'',foto:[...monUi.foto],lat:p?p.lat:null,lon:p?p.lon:null,acc:p&&p.acc||null,posFonte:p&&p.fonte||''}); ui.monTab='rilievi'; }
+    await put('rilievi',id,{data:o.data,appId:appId||'',tipo:o.tipo,organo:o.organo||'',intensita:/-no$/.test(o.tipo)?0:num(o.intensita),diffusione:num(o.diffusione),note:o.note||'',foto:[...monUi.foto],lat:p?p.lat:null,lon:p?p.lon:null,acc:p&&p.acc||null,posFonte:p&&p.fonte||''}); ui.monTab='rilievi'; }
   else if(k==='trap'){ const lat=num(o.lat), lon=num(o.lon); let appId=o.appId; if(!appId&&lat!=null&&lon!=null){const m=appDaPunto(lat,lon); if(m) appId=m.id}
     const old2=id?S.trappole.find(t=>t.id===id):null; await put('trappole',id,{...(old2||{}),codice:o.codice,nome:o.nome||'',specie:o.specie,tipo:o.tipo,lat,lon,appId:appId||'',installata:o.installata||'',capsula:o.capsula||'',durataCapsula:num(o.durataCapsula),attiva:!!o.attiva,note:o.note||''}); ui.monTab='trappole'; }
   else if(k==='catt'){ if(num(o.n)==null) return toast('Indica il numero di catture');
@@ -1554,6 +1578,12 @@ document.addEventListener('click',async e=>{
     case 'close': closeModal(); break;
     case 'min-pick': minPick(b.dataset.reg); break;
     case 'dss-tutto': ui.dssTutto=!ui.dssTutto; render(); break;
+    case 'new-vend': formVend(); break; case 'edit-vend': formVend(find('vendemmie')); break;
+    case 'ask-del-vend': confirmBox('Eliminare questo conferimento?','del-vend',id); break; case 'del-vend': await del('vendemmie',id); closeModal(); break;
+    case 'new-man': formMan({},id); break; case 'edit-man': formMan(find('manutenzioni')); break;
+    case 'ask-del-man': confirmBox('Eliminare questa manutenzione?','del-man',id); break; case 'del-man': await del('manutenzioni',id); closeModal(); break;
+    case 'new-spesa': formSpesa(); break; case 'edit-spesa': formSpesa(find('spese')); break;
+    case 'ask-del-spesa': confirmBox('Eliminare questa spesa?','del-spesa',id); break; case 'del-spesa': await del('spese',id); closeModal(); break;
     case 'montab': ui.monTab=b.dataset.v; render(); break;
     case 'new-ril': formRil(); break; case 'edit-ril': formRil(find('rilievi')); break;
     case 'ask-del-ril': confirmBox('Eliminare questo rilievo e le sue foto?','del-ril',id); break;
@@ -1646,7 +1676,7 @@ document.addEventListener('submit',async e=>{
 document.addEventListener('change',e=>{
   const el=e.target;
   if(el.id==='f_gis'&&el.files[0]){ const box=$('#gisList'); if(box) box.innerHTML='<p class="muted small">Lettura del file…</p>'; readGisFile(el.files[0]).then(fs=>{gisFeatures=fs;renderGisList()}).catch(err=>{gisFeatures=[];renderGisList(err&&err.message&&err.message!=='lib'?err.message:'Non riesco a leggere il file. Controlla che sia un KML, KMZ, GeoJSON o uno Shapefile .zip valido.')}); return; }
-  if(el.dataset&&el.dataset.ui){ const k=el.dataset.ui; ui[k]=['fenYear','matYear','lavYear','expYear','dssYear','concYear'].includes(k)?+el.value:el.value; render(); }
+  if(el.dataset&&el.dataset.ui){ const k=el.dataset.ui; ui[k]=['fenYear','matYear','lavYear','expYear','dssYear','concYear','vendYear','costYear'].includes(k)?+el.value:el.value; render(); }
   if(el.closest&&el.closest('form[data-form=tr]')) trPreview();
   if(el.closest&&el.closest('form[data-form=conc]')) concPreview();
   if(el.id==='f_foto'&&el.files&&el.files.length){ monFoto([...el.files]); el.value=''; }
@@ -1802,13 +1832,15 @@ function faseStimata(a,day,GDD){
   else {const md=day.slice(5); const cal={...CAL_FASI}; if(pre){cal.M='07-28';cal.N='08-15'} for(const l of 'CDEFGHIJKLMN') if(md>=cal[l]) f=l;}
   return f;
 }
-function vendemmiata(appId,day){return S.lavorazioni.some(l=>l.appId===appId&&l.tipo==='Vendemmia'&&l.data&&l.data<=day&&l.data.slice(0,4)===day.slice(0,4))}
+function vendemmiata(appId,day){return S.lavorazioni.some(l=>l.appId===appId&&l.tipo==='Vendemmia'&&l.data&&l.data<=day&&l.data.slice(0,4)===day.slice(0,4))||S.vendemmie.some(v=>v.appId===appId&&!v.parziale&&v.data&&v.data<=day&&v.data.slice(0,4)===day.slice(0,4))}
 function faseApp(a,day,GDD){
   const y=day.slice(0,4);
   const r=S.fenologia.filter(f=>f.appId===a.id&&f.data&&f.data.slice(0,4)===y&&f.data<=day).sort((p,q)=>p.data.localeCompare(q.data));
-  const md=day.slice(5); const haVend=S.lavorazioni.some(l=>l.appId===a.id&&l.tipo==='Vendemmia'&&l.data&&l.data.slice(0,4)===y);
+  const md=day.slice(5); const haVend=S.lavorazioni.some(l=>l.appId===a.id&&l.tipo==='Vendemmia'&&l.data&&l.data.slice(0,4)===y)||S.vendemmie.some(v=>v.appId===a.id&&!v.parziale&&v.data&&v.data.slice(0,4)===y);
   const post=vendemmiata(a.id,day)||md>='11-15'||md<'02-01'||(!haVend&&md>=(precoce(a)?'09-20':'10-20'));
-  if(r.length){const f=r[r.length-1].fase; const st=faseStimata(a,day,GDD); return {f:faseIdx(st)>faseIdx(f)&&daysBetween(r[r.length-1].data,day)>21?st:f,stimata:false,dal:r[r.length-1].data,post}}
+  if(r.length){const last=r[r.length-1], f0=last.fase; const g0=gddCum(GDD,last.data.slice(0,10)), g1=gddCum(GDD,day);
+    if(g0!=null&&g1!=null){ const thr=GDD_GRUPPI[gruppoFen(a)]||GDD_FASI; const v=sogliaFase(a,f0)+(g1-g0); let f=f0; for(const l of 'CDEFGHIJKLMN') if(faseIdx(l)>faseIdx(f0)&&v>=thr[l]) f=l; return {f,stimata:f!==f0,proiettata:f!==f0,rilevata:f0,dal:last.data,post} }
+    const st=faseStimata(a,day,GDD); return {f:faseIdx(st)>faseIdx(f0)&&daysBetween(last.data,day)>21?st:f0,stimata:false,dal:last.data,post}}
   return {f:faseStimata(a,day,GDD),stimata:true,post};
 }
 
@@ -2133,7 +2165,7 @@ function dssTabella(V){
   const ord=[...V].sort((a,b)=>b.top-a.top||String(a.app.codice).localeCompare(String(b.app.codice)));
   const pc=o=>`<span class="pill ${o.cls}">${esc(o.titolo)}</span>`;
   const righe=ord.map(v=>{const a=v.app,f=v.fase;return `<tr><td><span class="code">${esc(a.codice)}</span> ${esc(a.nome||'')}<div class="muted small">${esc(a.varieta||'')}</div></td>
-    <td class="small">${f.post?'<span class="pill neutral">Dopo vendemmia</span>':`<span class="pill acc">${esc(f.f)}</span> ${esc(FASI[faseIdx(f.f)]?.[1]||'')}`}<div class="muted">${f.stimata?'stimata':'rilevata il '+fDs(f.dal)}</div></td>
+    <td class="small">${f.post?'<span class="pill neutral">Dopo vendemmia</span>':`<span class="pill acc">${esc(f.f)}</span> ${esc(FASI[faseIdx(f.f)]?.[1]||'')}`}<div class="muted">${f.proiettata?'stimata dal rilievo del '+fDs(f.dal):f.stimata?'stimata':'rilevata il '+fDs(f.dal)}</div></td>
     ${['per','oid','bot'].map(dk=>`<td>${pc(v.dis[dk])}${v.dis[dk].azione&&v.dis[dk].liv>=2?`<div class="small" style="margin-top:4px"><b>${esc(v.dis[dk].azione)}</b></div>`:''}</td>`).join('')}
     <td><span class="pill ${v.campo.cls}">${v.campo.cls==='ok'?'Libero':v.campo.cls==='crit'?'Vietato':'Con cautela'}</span></td></tr>`}).join('');
   // dettagli raggruppati: stesso messaggio, elenco degli appezzamenti
@@ -2221,6 +2253,7 @@ function pDifesa(){
     <section class="card"><div class="card-h"><h2>Cosa fare, appezzamento per appezzamento</h2></div>${A.length?dssTabella(V):'<p class="muted">Aggiungi gli appezzamenti.</p>'}</section>
     <section class="card"><div class="card-h"><h2>Prossimi 7 giorni</h2><a href="#meteo">Meteo e fasce</a></div>${dssProssimi(R)}</section>
     <section class="card"><div class="card-h"><h2>Stagione</h2>${yrs.length>1?`<select data-ui="dssYear">${yrs.map(y=>`<option ${y===(ui.dssYear||yrs[0])?'selected':''}>${y}</option>`).join('')}</select>`:`<span class="muted small">${yrs[0]||''}</span>`}</div>${dssTimeline(R)}</section>
+    <section class="card"><div class="card-h"><h2>Modello e rilievi in campo a confronto</h2><a href="#monitoraggio">Nuovo rilievo</a></div>${confrontoRilieviHtml(R)}</section>
     <section class="card"><div class="card-h"><h2>Modello e bollettino a confronto</h2><span class="muted small">${ui.dssYear||new Date().getFullYear()}</span></div>${bolConfrontoHtml(R)}</section>
     <section class="card"><div class="card-h"><h2>Registro degli eventi</h2></div>${dssRegistro(R)}</section>
     ${dssMetodi(R)}`;
@@ -2483,7 +2516,7 @@ function concPreview(){
    ===================================================================== */
 const TIPI_RIL=[
  ['per-macchie','Peronospora – macchie d\'olio','per'],['per-spor','Peronospora – muffa bianca (sporulazione)','per'],['per-grapp','Peronospora – su grappolo','per'],
- ['oid-foglie','Oidio – foglie','oid'],['oid-grapp','Oidio – grappoli','oid'],['bot-grapp','Botrite – grappoli','bot'],['marciume','Marciume acido',''],['blackrot','Black rot',''],
+ ['oid-foglie','Oidio – foglie','oid'],['oid-grapp','Oidio – grappoli','oid'],['bot-grapp','Botrite – grappoli','bot'],['per-no','Peronospora – controllato, nessun sintomo','per'],['oid-no','Oidio – controllato, nessun sintomo','oid'],['bot-no','Botrite – controllata, nessun sintomo','bot'],['marciume','Marciume acido',''],['blackrot','Black rot',''],
  ['tign-nidi','Tignoletta – nidi o glomeruli','ins'],['tign-uova','Tignoletta – uova o larve sui grappoli','ins'],['cicaline','Cicaline (Empoasca)','ins'],['scaphoideus','Scaphoideus titanus (forme giovanili)','ins'],
  ['giallumi','Giallumi (flavescenza dorata, legno nero)',''],['esca','Mal dell\'esca',''],['acari','Acari ed erinosi','ins'],['carenze','Carenze o clorosi',''],['grandine','Danni da grandine o vento',''],['stress','Stress idrico',''],['altro','Altro','']];
 const tipoRil=k=>(TIPI_RIL.find(t=>t[0]===k)||[k,k,''])[1];
@@ -2658,12 +2691,12 @@ function monMappa(){
   const P=([lon,lat])=>[((lon-bb[0])/(bb[2]-bb[0])*W).toFixed(1),((bb[3]-lat)/(bb[3]-bb[1])*H).toFixed(1)];
   const lim=isoDay(addDays(new Date(),-30));
   let s=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`;
-  geo.forEach(({a,g})=>{(g.type==='MultiPolygon'?g.coordinates:[g.coordinates]).forEach(p=>{s+=`<polygon points="${p[0].map(q=>P(q).join(',')).join(' ')}" fill="rgba(255,255,255,.10)" stroke="#fff" stroke-width="2"><title>${esc(a.codice)} ${esc(a.nome||'')}</title></polygon>`});
-    const c=(g.type==='MultiPolygon'?g.coordinates[0]:g.coordinates)[0]; const cx=c.reduce((s2,q)=>s2+q[0],0)/c.length, cy=c.reduce((s2,q)=>s2+q[1],0)/c.length; const [x,y]=P([cx,cy]); s+=`<text x="${x}" y="${y}" font-size="16" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle">${esc(a.codice)}</text>`});
-  S.rilievi.filter(r=>r.lat&&r.data&&r.data.slice(0,10)>=lim).forEach(r=>{const [x,y]=P([num(r.lon),num(r.lat)]); const i=num(r.intensita)||0; s+=`<circle cx="${x}" cy="${y}" r="7" fill="${i>=3?'#e5484d':i>=2?'#f5a524':'#f7f7f7'}" stroke="#000" stroke-width="1.5"><title>${fD(r.data)} ${esc(tipoRil(r.tipo))}</title></circle>`});
-  S.trappole.filter(t=>t.lat).forEach(t=>{const [x,y]=P([num(t.lon),num(t.lat)]); s+=`<g data-act="trap-hist" data-id="${t.id}" style="cursor:pointer"><path d="M${x} ${y} l-8 -16 a9 9 0 1 1 16 0 z" fill="${t.attiva===false?'#999':'#7c3aed'}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y-22}" font-size="13" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle">${esc(t.codice||'')}</text><title>${esc(t.codice||'')} ${esc(t.nome||'')} · ${esc(t.specie||'')}</title></g>`});
+  geo.forEach(({a,g})=>{(g.type==='MultiPolygon'?g.coordinates:[g.coordinates]).forEach(p=>{s+=`<polygon data-app="${a.id}" points="${p[0].map(q=>P(q).join(',')).join(' ')}" fill="rgba(255,255,255,.10)" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke"><title>${esc(a.codice)} ${esc(a.nome||'')}</title></polygon>`});
+    const c=(g.type==='MultiPolygon'?g.coordinates[0]:g.coordinates)[0]; const cx=c.reduce((s2,q)=>s2+q[0],0)/c.length, cy=c.reduce((s2,q)=>s2+q[1],0)/c.length; const [x,y]=P([cx,cy]); s+=`<text class="zl" style="--b:16px" x="${x}" y="${y}" font-size="16" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle">${esc(a.codice)}</text>`});
+  S.rilievi.filter(r=>r.lat&&r.data&&r.data.slice(0,10)>=lim).forEach(r=>{const [x,y]=P([num(r.lon),num(r.lat)]); const i=num(r.intensita)||0; s+=`<g transform="translate(${x} ${y})"><circle class="zsc" r="7" fill="${i>=3?'#e5484d':i>=2?'#f5a524':'#f7f7f7'}" stroke="#000" stroke-width="1.5"><title>${fD(r.data)} ${esc(tipoRil(r.tipo))}</title></circle></g>`});
+  S.trappole.filter(t=>t.lat).forEach(t=>{const [x,y]=P([num(t.lon),num(t.lat)]); s+=`<g data-act="trap-hist" data-id="${t.id}" style="cursor:pointer" transform="translate(${x} ${y})"><g class="zsc"><path d="M0 0 l-8 -16 a9 9 0 1 1 16 0 z" fill="${t.attiva===false?'#999':'#7c3aed'}" stroke="#fff" stroke-width="2"/><text x="0" y="-22" font-size="13" font-weight="700" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle">${esc(t.codice||'')}</text></g><title>${esc(t.codice||'')} ${esc(t.nome||'')} · ${esc(t.specie||'')}</title></g>`});
   s+='</svg>';
-  return `<div class="mapbox" style="aspect-ratio:${W}/${H}">${or?`<img src="${or.url}" alt="Foto aerea dell'azienda">`:''}${s}${or?`<span class="map-cap">© ${esc(or.attribuzione||'Esri')}</span>`:''}</div>
+  return `${zmSelect('mon')}<div class="mapbox zbox" data-zoom="mon" style="aspect-ratio:${W}/${H}"><div class="zin">${or?`<img src="${or.url}" alt="Foto aerea dell'azienda">`:''}${S.ortofoto.filter(o=>o.id!=='azienda'&&o.url&&o.bbox).map(o=>{const b=o.bbox; const L=(b[0]-bb[0])/(bb[2]-bb[0])*100, T=(bb[3]-b[3])/(bb[3]-bb[1])*100, Wp=(b[2]-b[0])/(bb[2]-bb[0])*100, Hp=(b[3]-b[1])/(bb[3]-bb[1])*100; return `<img class="otile" src="${o.url}" alt="" style="left:${L.toFixed(3)}%;top:${T.toFixed(3)}%;width:${Wp.toFixed(3)}%;height:${Hp.toFixed(3)}%">`}).join('')}${s}</div>${zmTools()}${or?`<span class="map-cap">© ${esc(or.attribuzione||'Esri')}</span>`:''}</div>
    <div class="sw-legend" style="margin-top:8px"><span><i style="background:#7c3aed"></i>trappola (tocca per le letture)</span><span><i style="background:#e5484d"></i>rilievo forte</span><span><i style="background:#f5a524"></i>rilievo medio</span><span><i style="background:#f7f7f7;border:1px solid var(--line)"></i>rilievo lieve, ultimi 30 giorni</span></div>`;
 }
 /* --- integrazione con la difesa e la panoramica --- */
@@ -2779,6 +2812,251 @@ function bolConfrontoHtml(R){
   </tbody></table></div>`;
 }
 function bolNotaDisease(dk){ const b=bolRecente(10); if(!b) return ''; const r=bolA(b).rischi[dk]; if(!r) return ''; return `<div class="small bol-nota">Bollettino del ${fDs(bolData(b))}: ${livPill(bolCls(r.liv),r.liv==null?'vedi testo':'rischio '+bolLivTxt(r.liv))}</div>` }
+
+/* =====================================================================
+   ZOOM DELLE MAPPE (dita, rotella con Ctrl, pulsanti, zoom su un vigneto)
+   ===================================================================== */
+const ZOOM={};
+const zmTools=()=>`<div class="ztools"><button type="button" data-zm="+" aria-label="Ingrandisci">+</button><button type="button" data-zm="-" aria-label="Riduci">−</button><button type="button" data-zm="0" aria-label="Vista intera">⤢</button></div>`;
+function zmSelect(id){ const A=apps().filter(a=>geoOf(a)); if(A.length<2) return ''; const cur=(ZOOM[id]||{}).app||'';
+  return `<label class="zsel"><span class="muted small">Zoom su</span><select data-zoomto="${id}"><option value="">Tutta l'azienda</option>${A.map(a=>`<option value="${a.id}" ${cur===a.id?'selected':''}>${esc(a.codice)}${a.nome?' · '+esc(a.nome):''}</option>`).join('')}</select></label>`; }
+const zmState=box=>ZOOM[box.dataset.zoom]||{s:1,fx:0,fy:0};
+function zmApply(box){ const st=zmState(box), zin=box.querySelector('.zin'); if(!zin) return; const W=box.clientWidth,H=box.clientHeight;
+  zin.style.transform=`translate(${st.fx*W}px,${st.fy*H}px) scale(${st.s})`; zin.style.setProperty('--zs',st.s); const z=st.s>1.01; box.classList.toggle('zoomed',z); box.style.touchAction=z?'none':'pan-x pan-y'; }
+function zmApplyAll(){ document.querySelectorAll('.zbox[data-zoom]').forEach(zmApply); }
+function zmSet(box,s,x,y,tieniApp){ const W=box.clientWidth||1,H=box.clientHeight||1; s=Math.max(1,Math.min(12,s)); x=Math.min(0,Math.max(W-W*s,x)); y=Math.min(0,Math.max(H-H*s,y));
+  const id=box.dataset.zoom; const app=tieniApp?(ZOOM[id]||{}).app:''; ZOOM[id]={s,fx:x/W,fy:y/H,app}; zmApply(box);
+  if(!tieniApp){ const sel=document.querySelector(`select[data-zoomto="${id}"]`); if(sel) sel.value=''; } }
+function zmAt(box,f,cx,cy){ const st=zmState(box),W=box.clientWidth,H=box.clientHeight; const x=st.fx*W,y=st.fy*H; const s2=Math.max(1,Math.min(12,st.s*f)); const k=s2/st.s; zmSet(box,s2,cx-(cx-x)*k,cy-(cy-y)*k,true); }
+function zmFit(box,appId){ const id=box.dataset.zoom;
+  if(!appId){ ZOOM[id]={s:1,fx:0,fy:0,app:''}; zmApply(box); return; }
+  const els=[...box.querySelectorAll(`[data-app="${appId}"]`)]; if(!els.length) return; const st=zmState(box); const zr=box.querySelector('.zin').getBoundingClientRect();
+  let l=Infinity,t=Infinity,r=-Infinity,b=-Infinity; els.forEach(el=>{const q=el.getBoundingClientRect(); l=Math.min(l,q.left); t=Math.min(t,q.top); r=Math.max(r,q.right); b=Math.max(b,q.bottom)});
+  const x0=(l-zr.left)/st.s, y0=(t-zr.top)/st.s, w=Math.max(4,(r-l)/st.s), h=Math.max(4,(b-t)/st.s); const W=box.clientWidth,H=box.clientHeight;
+  const s=Math.max(1,Math.min(12,Math.min(W/(w*1.6),H/(h*1.6)))); ZOOM[id]={...(ZOOM[id]||{}),app:appId}; zmSet(box,s,W/2-s*(x0+w/2),H/2-s*(y0+h/2),true); }
+(function(){
+  const P=new Map(); let start=null, moved=false, box=null, lastTap=0, lastXY=null;
+  const rel=(b,e)=>{const r=b.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]};
+  document.addEventListener('pointerdown',e=>{ const b=e.target.closest('.zbox'); if(!b||e.target.closest('.ztools,.map-tools,select')) return; if(e.pointerType==='mouse'&&e.button!==0) return;
+    if(box&&box!==b) P.clear(); box=b; P.set(e.pointerId,rel(b,e)); if(P.size===1) moved=false;
+    start={st:{...zmState(b)},pts:new Map(P),W:b.clientWidth,H:b.clientHeight}; });
+  window.addEventListener('pointermove',e=>{ if(!box||!P.has(e.pointerId)) return; P.set(e.pointerId,rel(box,e)); const W=start.W,H=start.H, st=start.st;
+    if(P.size>=2){ const [a,b]=[...P.values()], [a0,b0]=[...start.pts.values()]; if(!a0||!b0) return;
+      const d=Math.hypot(a[0]-b[0],a[1]-b[1]), d0=Math.hypot(a0[0]-b0[0],a0[1]-b0[1])||1; const m=[(a[0]+b[0])/2,(a[1]+b[1])/2], m0=[(a0[0]+b0[0])/2,(a0[1]+b0[1])/2];
+      const s2=Math.max(1,Math.min(12,st.s*d/d0)), k=s2/st.s; zmSet(box,s2,m[0]-(m0[0]-st.fx*W)*k,m[1]-(m0[1]-st.fy*H)*k,true); moved=true; e.preventDefault(); }
+    else { const p0=start.pts.get(e.pointerId), p=P.get(e.pointerId); if(!p0) return; const dx=p[0]-p0[0], dy=p[1]-p0[1]; if(Math.hypot(dx,dy)>6) moved=true;
+      if(st.s>1.01&&moved){ zmSet(box,st.s,st.fx*W+dx,st.fy*H+dy,true); e.preventDefault(); } } },{passive:false});
+  const end=e=>{ if(!box||!P.has(e.pointerId)) return; const pos=P.get(e.pointerId); P.delete(e.pointerId);
+    if(!moved&&!P.size&&e.type==='pointerup'){ const now=Date.now(); if(now-lastTap<320&&lastXY&&Math.hypot(pos[0]-lastXY[0],pos[1]-lastXY[1])<30){ zmAt(box,2,pos[0],pos[1]); lastTap=0; } else { lastTap=now; lastXY=pos; } }
+    if(P.size){ start={st:{...zmState(box)},pts:new Map(P),W:box.clientWidth,H:box.clientHeight}; }
+    else { if(moved){ const b=box; b.dataset.nc='1'; setTimeout(()=>{delete b.dataset.nc},400); } box=null; } };
+  window.addEventListener('pointerup',end); window.addEventListener('pointercancel',end);
+  document.addEventListener('click',e=>{ const b=e.target.closest('.zbox'); if(b&&b.dataset.nc&&!e.target.closest('.ztools')){ e.stopPropagation(); e.preventDefault(); } },true);
+  document.addEventListener('click',e=>{ const t=e.target.closest('[data-zm]'); if(!t) return; const b=t.closest('.zbox'); if(!b) return; e.preventDefault(); e.stopPropagation();
+    const v=t.dataset.zm; if(v==='0'){ zmFit(b,''); const sel=document.querySelector(`select[data-zoomto="${b.dataset.zoom}"]`); if(sel) sel.value=''; return; } zmAt(b,v==='+'?1.7:1/1.7,b.clientWidth/2,b.clientHeight/2); },true);
+  document.addEventListener('wheel',e=>{ const b=e.target.closest('.zbox'); if(!b) return; if(!(e.ctrlKey||e.metaKey||zmState(b).s>1.01)) return; e.preventDefault(); const [x,y]=rel(b,e); zmAt(b,Math.exp(-e.deltaY*0.0025),x,y); },{passive:false});
+  document.addEventListener('change',e=>{ const s=e.target.closest&&e.target.closest('select[data-zoomto]'); if(!s) return; const b=document.querySelector(`.zbox[data-zoom="${s.dataset.zoomto}"]`); if(b) zmFit(b,s.value); });
+  window.addEventListener('resize',()=>zmApplyAll());
+})();
+
+/* =====================================================================
+   FENOLOGIA: dopo un rilievo le fasi successive proseguono con i gradi giorno
+   ===================================================================== */
+// gradi giorno medi giornalieri (base 10 °C) per mese, fascia litoranea e collinare abruzzese: servono solo oltre le previsioni meteo
+const GDD_CLIMA=[0,0,0.6,2.8,6.5,10.5,13.5,13.3,9,5,1.5,0.2];
+const gddCum=(GDD,day)=>{const g=GDD&&GDD[day]; return g&&g.full?g.gdd:null};
+function sogliaFase(a,f){ const thr=GDD_GRUPPI[gruppoFen(a)]||GDD_FASI; if(f==='A') return 0; if(f==='B') return thr.C/2; return thr[f]??0; }
+const FONTE_FASE={rilevata:'rilevata in campo',stimata:'stimata dai gradi giorno misurati',prevista:'prevista con il meteo dei prossimi giorni',media:'prevista con la media del periodo'};
+function calendarioFasi(a,y,R){
+  const GDD=(R&&R.GDD)||{}; const fc=new Map(((R&&R.G)||[]).map(g=>[g.day,!!g.fc])); const thr=GDD_GRUPPI[gruppoFen(a)]||GDD_FASI;
+  const rec=S.fenologia.filter(f=>f.appId===a.id&&f.data&&+f.data.slice(0,4)===y).sort((p,q)=>p.data.localeCompare(q.data));
+  const out={}; rec.forEach(r=>{ if(!out[r.fase]) out[r.fase]={fase:r.fase,data:r.data.slice(0,10),tipo:'rilevata'} });
+  const last=rec[rec.length-1]; const d0=last?parseD(last.data.slice(0,10)):new Date(y,0,1);
+  let v=last?sogliaFase(a,last.fase):0; const fMin=last?faseIdx(last.fase):-1; let prev=gddCum(GDD,isoDay(d0));
+  const fine=new Date(y,10,30);
+  for(let t=addDays(d0,1); t<=fine; t=addDays(t,1)){ const k=isoDay(t); const g=gddCum(GDD,k); let inc,src;
+    if(g!=null&&prev!=null){ inc=Math.max(0,g-prev); src=fc.get(k)?'prevista':'stimata'; } else { inc=GDD_CLIMA[t.getMonth()]; src='media'; }
+    if(g!=null) prev=g; v+=inc;
+    for(const l of 'CDEFGHIJKLMN'){ if(faseIdx(l)<=fMin||out[l]) continue; if(v>=thr[l]) out[l]={fase:l,data:k,tipo:src}; }
+  }
+  return FASI.map(f=>out[f[0]]).filter(Boolean).sort((p,q)=>p.data.localeCompare(q.data)||faseIdx(p.fase)-faseIdx(q.fase));
+}
+function fenCalendarioHtml(a,y){
+  const R=dss(); if(!a) return '';
+  const C=calendarioFasi(a,y,R.vuoto?null:R); const oggi=today();
+  if(!C.length) return `<p class="muted small">Servono i dati meteo per stimare le fasi.</p>`;
+  const cur=vendemmiata(a.id,oggi)?{fase:'post'}:C.filter(c=>c.data<=oggi).pop();
+  return `<p class="small">Dopo ogni rilievo le fasi successive ripartono da quella data con i gradi giorno (base 10 °C) di ${luogo()}: misurati per il passato, previsti per i prossimi giorni, poi la media del periodo. Gruppo di maturazione: <b>${esc(gruppoFen(a))}</b>.${cur?` Oggi: <span class="pill acc">${cur.fase==='post'?'vendemmiato':esc(faseLab(cur.fase))}</span>`:''}</p>
+  <div class="tbl-wrap"><table><thead><tr><th>Fase</th><th>BBCH</th><th>Data</th><th>Come</th></tr></thead><tbody>
+  ${C.map(c=>`<tr class="${c.data>oggi?'fut':''}"><td><span class="pill ${c.tipo==='rilevata'?'acc':'neutral'}">${esc(faseLab(c.fase))}</span></td><td class="mono">${esc(FASI[faseIdx(c.fase)]?.[2]||'')}</td><td class="mono">${c.tipo==='rilevata'?'':'≈ '}${fD(c.data)}</td><td class="small ${c.tipo==='rilevata'?'':'muted'}">${FONTE_FASE[c.tipo]}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+
+/* =====================================================================
+   MODELLO E RILIEVI IN CAMPO A CONFRONTO
+   ===================================================================== */
+function confrontoRilievi(R){
+  if(!R||R.vuoto) return [];
+  const out=[]; const oggi=today();
+  for(const r of S.rilievi){ const dk=(TIPI_RIL.find(t=>t[0]===r.tipo)||[])[2]; if(!['per','oid','bot'].includes(dk)||!r.data||!r.appId) continue;
+    const d=r.data.slice(0,10); if(d<R.inizio||d>oggi) continue; const a=appBy(r.appId); if(!a) continue;
+    const pos=!/-no$/.test(r.tipo)&&num(r.intensita)>=1; const D=parseD(d);
+    let atteso=false, dett='', giorni=null;
+    if(dk==='per'){ const da=isoDay(addDays(D,-21)), al=isoDay(addDays(D,3));
+      const L=R.per.infezioni.filter(x=>x.sintomi&&x.sintomi>=da&&x.sintomi<=al&&!x.fc&&recettivo.per(faseApp(a,x.day,R.GDD).f)&&!protettoA(R.cop,a.id,'per',x.k));
+      atteso=L.length>0; if(atteso){ const x=L[L.length-1]; giorni=daysBetween(x.sintomi,d); dett=`macchie attese dal ${fDs(x.sintomi)} (infezione ${x.tipo} del ${fDs(x.day)}, vegetazione non coperta)`; }
+      else dett='nessuna macchia attesa su vegetazione scoperta nelle 3 settimane prima'; }
+    else if(dk==='oid'){ const g=R.oid.giorni.filter(x=>x.day<=d&&x.indice!=null).pop(); const asc=R.oid.asc.some(x=>x.day>=isoDay(addDays(D,-21))&&x.day<=d); const idx=g?g.indice:null;
+      atteso=((idx!=null&&idx>=60)||asc)&&!protettoA(R.cop,a.id,'oid',d+'T12'); dett=(idx!=null?`indice ${idx}/100`:'indice non attivo')+(asc?', infezione da ascospore nelle 3 settimane prima':'')+(protettoA(R.cop,a.id,'oid',d+'T12')?', vegetazione coperta':''); }
+    else { const L=R.bot.filter(x=>x.day>=isoDay(addDays(D,-14))&&x.day<=d&&x.indice>=0.5&&recettivo.bot(faseApp(a,x.day,R.GDD).f)&&!protettoA(R.cop,a.id,'bot',x.k));
+      atteso=L.length>0; dett=atteso?`bagnatura a rischio il ${fDs(L[L.length-1].day)} (indice ${nf(L[L.length-1].indice,2)})`:'nessuna bagnatura a rischio nelle 2 settimane prima'; }
+    out.push({r,a,dk,d,pos,atteso,esito:pos===atteso?'ok':pos?'sotto':'sopra',dett,giorni});
+  }
+  return out.sort((x,y)=>y.d.localeCompare(x.d));
+}
+function confrontoRilieviHtml(R){
+  const C=confrontoRilievi(R);
+  const guida=`In Monitoraggio registra sia i sintomi sia i controlli fatti senza trovare niente ("controllato, nessun sintomo"): servono tutti e due per capire se il modello esagera o sottovaluta.`;
+  if(!C.length) return `<p class="muted small">Nessun rilievo di peronospora, oidio o botrite da confrontare con il modello. ${guida}</p>`;
+  const sint=DIS.map(([dk,n])=>{ const L=C.filter(c=>c.dk===dk); if(!L.length) return ''; const ok=L.filter(c=>c.esito==='ok').length, so=L.filter(c=>c.esito==='sopra').length, sot=L.filter(c=>c.esito==='sotto').length;
+    let t=`<b>${n}</b>: ${L.length===1?'1 rilievo':L.length+' rilievi'}, ${ok} in accordo`+(so?`, ${so===1?'una volta':so+' volte'} il modello ha dato rischio senza sintomi`:'')+(sot?`, ${sot===1?'una volta':sot+' volte'} sintomi che il modello non aveva previsto`:'')+'.';
+    if(dk==='per'){ const G=L.filter(c=>c.pos&&c.giorni!=null).map(c=>c.giorni); if(G.length){ const m=G.reduce((s,x)=>s+x,0)/G.length; t+=` Le macchie sono state viste in media ${nf(Math.abs(m),0)} giorni ${m>=0?'dopo':'prima di'} quanto previsto${Math.abs(m)>=5?(m>0?': il modello anticipa, ma conta anche quanto spesso controlli':': il modello è in ritardo'):''}.`; } }
+    if(L.length>=4){ if(so/L.length>=0.5) t+=' Tende a esagerare: valuta di intervenire sulle soglie.'; else if(sot/L.length>=0.34) t+=' Tende a sottovalutare: non allungare gli intervalli fidandoti solo del modello.'; }
+    return `<p class="small">${t}</p>`; }).join('');
+  const lab={ok:['ok','In accordo'],sopra:['warn','Modello più allarmista'],sotto:['crit','Modello in difetto']};
+  return `${sint}<p class="muted small">${guida} Il confronto tiene conto delle coperture dei trattamenti e della fase del vigneto.</p>
+  <div class="tbl-wrap"><table style="min-width:760px"><thead><tr><th>Data</th><th>Appezzamento</th><th>Rilievo</th><th>Cosa diceva il modello</th><th>Esito</th></tr></thead><tbody>
+  ${C.slice(0,60).map(c=>`<tr><td class="mono">${fDs(c.d)}</td><td><span class="code">${esc(c.a.codice)}</span></td><td class="small">${esc(tipoRil(c.r.tipo))}${c.pos?` · intensità ${esc(c.r.intensita)}`:''}</td><td class="small">${esc(c.dett)}</td><td><span class="pill ${lab[c.esito][0]}">${lab[c.esito][1]}</span></td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+
+/* =====================================================================
+   VENDEMMIA, RESE E CONFERIMENTI
+   ===================================================================== */
+const vendAnno=y=>S.vendemmie.filter(v=>v.data&&+v.data.slice(0,4)===y);
+function resaApp(a,y){ const L=vendAnno(y).filter(v=>v.appId===a.id); const q=sum(L,v=>num(v.quintali)); const ha=num(a.ettari)||0;
+  const gr=L.filter(v=>num(v.grado)!=null&&num(v.quintali)); const grado=gr.length?sum(gr,v=>num(v.grado)*num(v.quintali))/sum(gr,v=>num(v.quintali)):null;
+  const val=sum(L,v=>num(v.quintali)*(num(v.prezzo)||0)); return {L,q,ha,tha:ha?q/10/ha:null,grado,unita:(gr[0]||{}).unitaGrado||'°Babo',val,finita:L.some(v=>!v.parziale)}; }
+function pVend(){
+  const ys=uniq([new Date().getFullYear(),...S.vendemmie.filter(v=>v.data).map(v=>+v.data.slice(0,4))]).sort((a,b)=>b-a); if(!ui.vendYear) ui.vendYear=ys[0]; const y=+ui.vendYear;
+  const A=apps(); const R=A.map(a=>({a,...resaApp(a,y)})); const tot=sum(R,r=>r.q), ha=sum(R.filter(r=>r.q),r=>r.ha), val=sum(R,r=>r.val);
+  const L=vendAnno(y).sort((p,q)=>q.data.localeCompare(p.data));
+  const cant={}; L.forEach(v=>{const k=v.destinazione||'—'; cant[k]=cant[k]||{n:0,q:0,val:0}; cant[k].n++; cant[k].q+=num(v.quintali)||0; cant[k].val+=(num(v.quintali)||0)*(num(v.prezzo)||0)});
+  return head('Vendemmia','Raccolta per appezzamento, resa per ettaro e conferimenti in cantina.',bAct('new-vend','+ Conferimento','primary'))+
+  `<div class="filters"><label class="field"><span>Annata</span><select data-ui="vendYear">${opts(ys,y)}</select></label></div>
+  <section class="grid g3"><div class="kpi"><span class="eyebrow">Uva raccolta</span><b>${nf(tot,1)}<small> q</small></b><span class="muted small">${L.length} conferimenti</span></div>
+   <div class="kpi"><span class="eyebrow">Resa media</span><b>${ha?nf(tot/10/ha,1):'—'}<small> t/ha</small></b><span class="muted small">su ${nf(ha,2)} ha raccolti</span></div>
+   <div class="kpi"><span class="eyebrow">Valore</span><b>${val?nf(val,0):'—'}<small> €</small></b><span class="muted small">${val?'dai prezzi indicati':'indica il prezzo al quintale'}</span></div></section>
+  <section class="card"><div class="card-h"><h2>Resa per appezzamento · ${y}</h2></div><div class="tbl-wrap"><table style="min-width:760px"><thead><tr><th>Appezzamento</th><th class="num">Ettari</th><th class="num">Quintali</th><th class="num">Resa t/ha</th><th class="num">Attesa</th><th class="num">Massima disciplinare</th><th class="num">Grado medio</th><th>Stato</th></tr></thead><tbody>
+  ${R.map(r=>{const att=num((r.a.conc||{}).prodAttesa), max=num(r.a.resaMax); const over=max&&r.tha>max;
+    return `<tr><td><span class="code">${esc(r.a.codice)}</span> ${esc(r.a.nome||'')}<div class="muted small">${esc(r.a.varieta||'')}</div></td><td class="num">${nf(r.ha,2)}</td><td class="num">${r.q?nf(r.q,1):'—'}</td><td class="num">${r.tha!=null&&r.q?`<b>${nf(r.tha,1)}</b>`:'—'}</td><td class="num">${att?nf(att,0):'—'}</td><td class="num">${max?nf(max,1):'<span class="muted small">da indicare</span>'}</td><td class="num">${r.grado!=null?nf(r.grado,1)+' '+esc(r.unita):'—'}</td><td>${!r.q?'<span class="pill neutral">Da raccogliere</span>':over?'<span class="pill crit">Oltre il disciplinare</span>':r.finita?'<span class="pill ok">Raccolto</span>':'<span class="pill warn">In corso</span>'}</td></tr>`}).join('')}
+  </tbody></table></div><p class="muted small" style="margin-top:8px">La resa massima del disciplinare si imposta nella scheda dell'appezzamento; quella attesa nei parametri di concimazione. Un conferimento non segnato come parziale chiude la vendemmia dell'appezzamento (i modelli di difesa passano al dopo vendemmia).</p></section>
+  ${Object.keys(cant).length?`<section class="card"><div class="card-h"><h2>Conferimenti per cantina</h2></div><div class="tbl-wrap"><table><thead><tr><th>Cantina</th><th class="num">Conferimenti</th><th class="num">Quintali</th><th class="num">Valore €</th></tr></thead><tbody>${Object.entries(cant).map(([k,c])=>`<tr><td><b>${esc(k)}</b></td><td class="num">${c.n}</td><td class="num">${nf(c.q,1)}</td><td class="num">${c.val?nf(c.val,0):'—'}</td></tr>`).join('')}</tbody></table></div></section>`:''}
+  <section class="card"><div class="card-h"><h2>Registro dei conferimenti</h2></div>${L.length?`<div class="tbl-wrap"><table style="min-width:820px"><thead><tr><th>Data</th><th>Appezzamento</th><th class="num">Quintali</th><th class="num">Grado</th><th class="num">Acidità</th><th>Cantina</th><th>Documento</th><th class="num">€/q</th><th></th></tr></thead><tbody>
+   ${L.map(v=>`<tr><td class="mono">${fD(v.data)}</td><td><span class="code">${esc(appCode(v.appId))}</span>${v.parziale?' <span class="muted small">parziale</span>':''}</td><td class="num">${nf(num(v.quintali),1)}</td><td class="num">${num(v.grado)!=null?nf(num(v.grado),1)+' '+esc(v.unitaGrado||''):'—'}</td><td class="num">${num(v.acidita)!=null?nf(num(v.acidita),1):'—'}</td><td>${esc(v.destinazione||'—')}</td><td class="small">${esc(v.documento||'—')}</td><td class="num">${num(v.prezzo)!=null?nf(num(v.prezzo),2):'—'}</td><td class="act">${iAct('edit-vend',IC.edit,'Modifica',`data-id="${v.id}"`)}${iAct('ask-del-vend',IC.trash,'Elimina',`data-id="${v.id}"`)}</td></tr>`).join('')}
+   </tbody></table></div>`:`<div class="empty"><b>Nessun conferimento nel ${y}</b><span>Registra ogni carico portato in cantina: quintali, grado e numero del documento di conferimento.</span></div>`}</section>`;
+}
+function formVend(v={}){
+  const cantine=uniq(S.vendemmie.map(x=>x.destinazione).filter(Boolean));
+  openModal(`<form data-form="vend" data-id="${v.id||''}">${dlgHead(v.id?'Modifica conferimento':'Nuovo conferimento')}<div class="dlg-b"><div class="fg">
+   ${fld('Appezzamento',`<select name="appId" id="f_appId" required>${appOpts(v.appId)}</select>`,'w2')}${fld('Data',inp('data',v.data||today(),'type="date" required'))}
+   ${fld('Uva (quintali)',inp('quintali',v.quintali,'required inputmode="decimal" placeholder="es. 42,5"'))}${fld('Grado zuccherino',inp('grado',v.grado,'inputmode="decimal"'))}${fld('Unità',`<select name="unitaGrado" id="f_unitaGrado">${opts(['°Babo','°Brix'],v.unitaGrado||'°Babo')}</select>`)}
+   ${fld('Acidità totale (g/L)',inp('acidita',v.acidita,'inputmode="decimal"'))}${fld('pH',inp('ph',v.ph,'inputmode="decimal"'))}${fld('Raccolta',`<select name="raccolta" id="f_raccolta">${opts(['Manuale','Meccanica'],v.raccolta||'Manuale')}</select>`)}
+   ${fld('Cantina di conferimento',inp('destinazione',v.destinazione,'list="dl_cant" placeholder="es. Cantina sociale"'),'w2')}${fld('N. conferimento o DDT',inp('documento',v.documento))}
+   ${fld('Prezzo (€/q)',inp('prezzo',v.prezzo,'inputmode="decimal" placeholder="facoltativo"'))}${fld('Ore di raccolta',inp('ore',v.ore,'inputmode="decimal" placeholder="facoltativo"'))}
+   <label class="chip wall" style="justify-self:start"><input type="checkbox" name="parziale" ${v.parziale?'checked':''}>Raccolta parziale: l'appezzamento non è ancora finito</label>
+   ${fld('Note',`<textarea name="note" id="f_note">${esc(v.note||'')}</textarea>`,'wall')}</div><datalist id="dl_cant">${cantine.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div>${dlgFoot()}</form>`,true);
+}
+
+/* =====================================================================
+   MANUTENZIONE DEI MEZZI
+   ===================================================================== */
+const TIPI_MAN=['Tagliando','Cambio olio motore','Filtri (aria, olio, gasolio)','Olio trasmissione e idraulico','Cinghie','Pneumatici o cingoli','Freni','Batteria','Ingrassaggio','Revisione','Riparazione','Altro'];
+const oreTr=t=>{ if(!t.inizio||!t.fine) return 0; const h=(parseD(t.fine)-parseD(t.inizio))/36e5; return h>0&&h<24?h:0 };
+function oreMezzo(m){ // ultima lettura del contaore (scheda o manutenzione) + ore registrate dopo
+  const letture=[]; if(num(m.ore)!=null) letture.push({ore:num(m.ore),data:m.oreData||'2000-01-01'});
+  S.manutenzioni.filter(x=>x.mezzoId===m.id&&num(x.ore)!=null&&x.data).forEach(x=>letture.push({ore:num(x.ore),data:x.data}));
+  if(!letture.length) return null; const L=letture.sort((a,b)=>a.data.localeCompare(b.data)||a.ore-b.ore).pop();
+  let agg=0; S.lavorazioni.forEach(l=>{ if(l.data>L.data&&(l.mezzoIds||[]).includes(m.id)) agg+=num(l.ore)||0 });
+  S.trattamenti.forEach(t=>{ if(t.inizio&&t.inizio.slice(0,10)>L.data&&(t.mezzoIds||[]).includes(m.id)&&!t.esempio) agg+=oreTr(t) });
+  return {ore:L.ore+agg,lettura:L.ore,dal:L.data,agg}; }
+function scadenzeMezzo(m){ const oa=oreMezzo(m); const ult={};
+  S.manutenzioni.filter(x=>x.mezzoId===m.id&&x.data).sort((a,b)=>a.data.localeCompare(b.data)).forEach(x=>{ult[x.tipo]=x});
+  return Object.values(ult).filter(x=>num(x.intervalloOre)||x.prossimaData).map(x=>{ const dueOre=num(x.intervalloOre)&&num(x.ore)!=null?num(x.ore)+num(x.intervalloOre):null; const rest=dueOre!=null&&oa?dueOre-oa.ore:null; const gg=x.prossimaData?daysBetween(today(),x.prossimaData):null;
+    const cls=(rest!=null&&rest<=0)||(gg!=null&&gg<0)?'crit':(rest!=null&&rest<=25)||(gg!=null&&gg<=30)?'warn':'ok';
+    return {m,x,dueOre,rest,gg,cls}; }); }
+function manAlerts(){ const out=[]; for(const m of S.attrezzature){ for(const s of scadenzeMezzo(m)) if(s.cls!=='ok') out.push([s.cls,`${esc(m.nome)}: ${esc(s.x.tipo.toLowerCase())} ${s.cls==='crit'?'scaduto':'in scadenza'}`,[s.rest!=null?(Math.abs(s.rest)<0.5?'scadenza raggiunta':s.rest<0?`superate di ${nf(-s.rest,0)} ore`:`mancano ${nf(s.rest,0)} ore`):'',s.gg!=null?(s.gg<0?`dal ${fD(s.x.prossimaData)}`:`entro il ${fD(s.x.prossimaData)}`):''].filter(Boolean).join(' · ')]) } return out; }
+function manSezione(){
+  const M=[...S.attrezzature].sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'it')); const sc=M.flatMap(scadenzeMezzo).sort((a,b)=>({crit:0,warn:1,ok:2}[a.cls]-{crit:0,warn:1,ok:2}[b.cls]));
+  const L=[...S.manutenzioni].filter(x=>x.data).sort((a,b)=>b.data.localeCompare(a.data));
+  const mez=id=>(S.attrezzature.find(a=>a.id===id)||{}).nome||'—';
+  return `<section class="card"><div class="card-h"><h2>Manutenzioni</h2>${bAct('new-man','+ Manutenzione','primary small')}</div>
+   <p class="muted small" style="margin-bottom:12px">Le ore motore si aggiornano da sole con le ore di lavorazioni e trattamenti in cui usi il mezzo, partendo dall'ultima lettura del contaore. Indica l'intervallo (in ore o con una data) per avere l'avviso della prossima scadenza.</p>
+   ${sc.length?`<div class="tbl-wrap" style="margin-bottom:14px"><table><thead><tr><th>Mezzo</th><th>Intervento</th><th>Prossima scadenza</th><th>Stato</th></tr></thead><tbody>${sc.map(s=>`<tr><td><b>${esc(s.m.nome)}</b></td><td>${esc(s.x.tipo)}</td><td class="small">${[s.dueOre!=null?`a ${nf(s.dueOre,0)} ore`:'',s.x.prossimaData?`entro il ${fD(s.x.prossimaData)}`:''].filter(Boolean).join(' o ')}</td><td><span class="pill ${s.cls}">${s.cls==='crit'?'Scaduta':s.cls==='warn'?'In scadenza':'In regola'}</span>${s.rest!=null?`<div class="muted small">${Math.abs(s.rest)<0.5?'scadenza raggiunta':s.rest<0?`superata di ${nf(-s.rest,0)} h`:`mancano ${nf(s.rest,0)} h`}</div>`:''}</td></tr>`).join('')}</tbody></table></div>`:''}
+   ${L.length?`<div class="tbl-wrap"><table style="min-width:720px"><thead><tr><th>Data</th><th>Mezzo</th><th>Intervento</th><th class="num">Ore</th><th class="num">Costo €</th><th>Note</th><th></th></tr></thead><tbody>${L.slice(0,80).map(x=>`<tr><td class="mono">${fD(x.data)}</td><td>${esc(mez(x.mezzoId))}</td><td>${esc(x.tipo)}${x.officina?`<div class="muted small">${esc(x.officina)}</div>`:''}</td><td class="num">${num(x.ore)!=null?nf(num(x.ore),0):'—'}</td><td class="num">${num(x.costo)!=null?nf(num(x.costo),0):'—'}</td><td class="small">${esc(x.note||'')}</td><td class="act">${iAct('edit-man',IC.edit,'Modifica',`data-id="${x.id}"`)}${iAct('ask-del-man',IC.trash,'Elimina',`data-id="${x.id}"`)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty"><b>Nessuna manutenzione registrata</b><span>Segna tagliandi, cambi olio e riparazioni con le ore del contaore.</span></div>`}</section>`;
+}
+function formMan(x={},mezzoId){
+  const M=[...S.attrezzature].sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'it')); const mid=x.mezzoId||mezzoId||(M[0]||{}).id; const m=S.attrezzature.find(a=>a.id===mid); const oa=m?oreMezzo(m):null;
+  openModal(`<form data-form="man" data-id="${x.id||''}">${dlgHead(x.id?'Modifica manutenzione':'Nuova manutenzione')}<div class="dlg-b"><div class="fg">
+   ${fld('Mezzo',`<select name="mezzoId" id="f_mezzoId" required>${opts(M.map(a=>[a.id,a.nome]),mid)}</select>`,'w2')}${fld('Data',inp('data',x.data||today(),'type="date" required'))}
+   ${fld('Intervento',`<select name="tipo" id="f_tipo">${opts(TIPI_MAN,x.tipo||'Tagliando')}</select>`)}${fld('Ore al contaore',inp('ore',x.ore??(oa?Math.round(oa.ore):''),'inputmode="decimal"'))}${fld('Costo (€)',inp('costo',x.costo,'inputmode="decimal"'))}
+   ${fld('Prossima tra (ore)',inp('intervalloOre',x.intervalloOre,'inputmode="numeric" placeholder="es. 250"'))}${fld('Oppure entro il',inp('prossimaData',x.prossimaData,'type="date"'))}${fld('Officina',inp('officina',x.officina))}
+   ${fld('Note e ricambi',`<textarea name="note" id="f_note">${esc(x.note||'')}</textarea>`,'wall')}</div>
+   ${oa&&!x.id?`<p class="muted small">Ore stimate oggi: ${nf(oa.ore,0)} (lettura di ${nf(oa.lettura,0)} h al ${fD(oa.dal)} più ${nf(oa.agg,1)} h registrate). Correggi con il valore del contaore.</p>`:''}</div>${dlgFoot()}</form>`,true);
+}
+
+/* =====================================================================
+   COSTI PER ETTARO
+   ===================================================================== */
+const VOCI_SPESA=['Gasolio e lubrificanti','Contoterzisti','Manodopera esterna','Consulenze e analisi','Assicurazione','Affitto o canoni','Acqua irrigua','Materiali (pali, fili, legacci)','Barbatelle e reimpianti','Altro'];
+function prezzoUnit(pid){ const C=S.magazzino.filter(m=>m.prodId===pid&&m.tipo==='carico'&&num(m.costo)!=null&&num(m.qta)); if(C.length){ const q=sum(C,m=>num(m.qta)); if(q) return {p:sum(C,m=>num(m.costo))/q,fonte:'acquisti'}; }
+  const p=prodBy(pid); return p&&num(p.prezzo)!=null?{p:num(p.prezzo),fonte:'scheda'}:null; }
+const costoOraOp=id=>{const o=S.operatori.find(x=>x.id===id); return o&&num(o.costoOra)!=null?num(o.costoOra):num(settings().costoOra)||0};
+const costoOraMez=id=>{const m=S.attrezzature.find(x=>x.id===id); return m&&num(m.costoOra)!=null?num(m.costoOra):0};
+function costiAnno(y){
+  const A=apps(); const C=Object.fromEntries(A.map(a=>[a.id,{prodotti:0,manodopera:0,macchine:0,manutenzioni:0,altre:0,ricavi:0,q:0}])); const manca={prezzi:new Set(),mezzi:new Set(),oreOp:0};
+  const haTot=sum(A,a=>num(a.ettari))||1; const quota=a=>(num(a.ettari)||0)/haTot; const inY=d=>d&&+String(d).slice(0,4)===y;
+  const lavoro=(c,ore,ops,mezzi)=>{ if(!ore) return; const O=ops&&ops.length?ops:[null]; O.forEach(o=>{ c.manodopera+=ore*(o?costoOraOp(o):(num(settings().costoOra)||0)) }); if(!O[0]) manca.oreOp+=ore; (mezzi||[]).forEach(m=>{ const k=costoOraMez(m); if(!k) manca.mezzi.add(m); c.macchine+=ore*k }) };
+  for(const t of S.trattamenti){ if(t.esempio||!inY(t.inizio)) continue; const ha=trHa(t)||1; const h=oreTr(t);
+    for(const id of t.appIds||[]){ const c=C[id]; if(!c) continue; const a=appBy(id); const sh=(num(a.ettari)||0)/ha;
+      (t.prodotti||[]).forEach(l=>{ const q=qtyHa(l,t.volume); if(q==null) return; const pr=prezzoUnit(l.prodId); if(!pr){ manca.prezzi.add(l.prodId); return; } c.prodotti+=q*(num(a.ettari)||0)*pr.p });
+      lavoro(c,h*sh,t.operatoreIds,t.mezzoIds); } }
+  for(const k of S.concimazioni){ if(!inY(k.data)) continue; for(const id of k.appIds||[]){ const c=C[id]; if(!c) continue; const a=appBy(id);
+      (k.prodotti||[]).forEach(l=>{ const q=concQtyHa(l); if(q==null) return; const pr=prezzoUnit(l.prodId); if(!pr){ manca.prezzi.add(l.prodId); return; } c.prodotti+=q*(num(a.ettari)||0)*pr.p }); } }
+  for(const l of S.lavorazioni){ if(l.esempio||!inY(l.data)) continue; const c=C[l.appId]; if(!c) continue; lavoro(c,num(l.ore)||0,l.operatoreIds,l.mezzoIds); }
+  for(const v of S.vendemmie){ if(!inY(v.data)) continue; const c=C[v.appId]; if(!c) continue; c.q+=num(v.quintali)||0; c.ricavi+=(num(v.quintali)||0)*(num(v.prezzo)||0); lavoro(c,num(v.ore)||0,v.operatoreIds,v.mezzoIds); }
+  const manTot=sum(S.manutenzioni.filter(x=>inY(x.data)),x=>num(x.costo)); A.forEach(a=>{ C[a.id].manutenzioni+=manTot*quota(a) });
+  for(const s of S.spese){ if(!inY(s.data)) continue; const imp=num(s.importo)||0; if(s.appId&&C[s.appId]) C[s.appId].altre+=imp; else A.forEach(a=>{ C[a.id].altre+=imp*quota(a) }); }
+  A.forEach(a=>{ const c=C[a.id]; c.tot=c.prodotti+c.manodopera+c.macchine+c.manutenzioni+c.altre; c.ha=num(a.ettari)||0; });
+  return {C,manca,manTot};
+}
+function pCosti(){
+  const ys=uniq([new Date().getFullYear(),...allYears().map(Number)]).filter(Boolean).sort((a,b)=>b-a); if(!ui.costYear) ui.costYear=ys[0]; const y=+ui.costYear;
+  const {C,manca}=costiAnno(y); const A=apps(); const T=k=>sum(A,a=>C[a.id][k]); const haTot=sum(A,a=>num(a.ettari)); const tot=T('tot'), ric=T('ricavi');
+  const voci=[['prodotti','Prodotti'],['manodopera','Manodopera'],['macchine','Macchine'],['manutenzioni','Manutenzioni'],['altre','Altre spese']];
+  const sp=S.spese.filter(s=>s.data&&+s.data.slice(0,4)===y).sort((a,b)=>b.data.localeCompare(a.data));
+  const avvisi=[]; if(!num(settings().costoOra)) avvisi.push('Imposta il costo orario della manodopera (qui sotto) o per ogni operatore.');
+  if(manca.prezzi.size) avvisi.push(`Prodotti senza prezzo: ${[...manca.prezzi].map(id=>esc((prodBy(id)||{}).nome||id)).join(', ')}. Registra gli acquisti in Magazzino con il costo, oppure il prezzo nella scheda prodotto.`);
+  if(manca.mezzi.size) avvisi.push(`Mezzi senza costo orario: ${[...manca.mezzi].map(id=>esc((S.attrezzature.find(a=>a.id===id)||{}).nome||id)).join(', ')} (Operatori e mezzi → modifica).`);
+  return head('Costi','Quanto costa ogni appezzamento: prodotti, manodopera, macchine, manutenzioni e altre spese, per ettaro e per quintale di uva.',bAct('new-spesa','+ Spesa','primary'))+
+  `<div class="filters"><label class="field"><span>Annata</span><select data-ui="costYear">${opts(ys,y)}</select></label>
+   <form data-form="costopar" class="field" style="flex-direction:row;align-items:flex-end;gap:8px"><label class="field"><span>Manodopera (€/ora)</span><input name="costoOra" id="f_costoOra" value="${esc(settings().costoOra??'')}" inputmode="decimal" style="width:110px" placeholder="es. 12"></label><button class="btn small" type="submit">Salva</button></form></div>
+  ${avvisi.length?`<div class="banner warn">${IC.info}<span>${avvisi.join('<br>')}</span></div>`:''}
+  <section class="grid g3"><div class="kpi"><span class="eyebrow">Costo totale</span><b>${nf(tot,0)}<small> €</small></b><span class="muted small">${y}</span></div><div class="kpi"><span class="eyebrow">Costo medio</span><b>${haTot?nf(tot/haTot,0):'—'}<small> €/ha</small></b><span class="muted small">su ${nf(haTot,2)} ha</span></div>
+   <div class="kpi"><span class="eyebrow">Ricavi uva</span><b>${ric?nf(ric,0):'—'}<small> €</small></b><span class="muted small">${ric?`margine ${nf(ric-tot,0)} €`:'dai conferimenti con prezzo'}</span></div></section>
+  <section class="card"><div class="card-h"><h2>Per appezzamento · ${y}</h2></div><div class="tbl-wrap"><table style="min-width:900px"><thead><tr><th>Appezzamento</th>${voci.map(v=>`<th class="num">${v[1]}</th>`).join('')}<th class="num">Totale €</th><th class="num">€/ha</th><th class="num">€/q uva</th><th class="num">Margine €/ha</th></tr></thead><tbody>
+  ${A.map(a=>{const c=C[a.id]; return `<tr><td><span class="code">${esc(a.codice)}</span> ${esc(a.nome||'')}<div class="muted small">${nf(c.ha,2)} ha</div></td>${voci.map(v=>`<td class="num">${c[v[0]]?nf(c[v[0]],0):'—'}</td>`).join('')}<td class="num"><b>${nf(c.tot,0)}</b></td><td class="num">${c.ha?nf(c.tot/c.ha,0):'—'}</td><td class="num">${c.q?nf(c.tot/c.q,1):'—'}</td><td class="num">${c.ricavi&&c.ha?nf((c.ricavi-c.tot)/c.ha,0):'—'}</td></tr>`}).join('')}
+  <tr class="tot"><td><b>Azienda</b></td>${voci.map(v=>`<td class="num"><b>${nf(T(v[0]),0)}</b></td>`).join('')}<td class="num"><b>${nf(tot,0)}</b></td><td class="num"><b>${haTot?nf(tot/haTot,0):'—'}</b></td><td class="num">${T('q')?nf(tot/T('q'),1):'—'}</td><td class="num">${ric&&haTot?nf((ric-tot)/haTot,0):'—'}</td></tr>
+  </tbody></table></div>
+  <p class="muted small" style="margin-top:8px">Prodotti: dose × superficie × prezzo medio degli acquisti in magazzino. Manodopera e macchine: ore di lavorazioni, trattamenti (dall'orario di inizio e fine) e raccolta per il costo orario di operatori e mezzi. Manutenzioni e spese comuni sono divise in proporzione agli ettari. Se nel costo orario dei mezzi includi già il gasolio, non registrarlo anche tra le spese.</p></section>
+  <section class="card"><div class="card-h"><h2>Altre spese · ${y}</h2></div>${sp.length?`<div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Voce</th><th>Appezzamento</th><th class="num">Importo €</th><th>Note</th><th></th></tr></thead><tbody>${sp.map(s=>`<tr><td class="mono">${fD(s.data)}</td><td>${esc(s.voce)}</td><td>${s.appId?`<span class="code">${esc(appCode(s.appId))}</span>`:'<span class="muted small">tutta l\'azienda</span>'}</td><td class="num">${nf(num(s.importo),2)}</td><td class="small">${esc(s.note||'')}</td><td class="act">${iAct('edit-spesa',IC.edit,'Modifica',`data-id="${s.id}"`)}${iAct('ask-del-spesa',IC.trash,'Elimina',`data-id="${s.id}"`)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty"><b>Nessuna spesa registrata</b><span>Gasolio, contoterzisti, consulenze, assicurazione, affitti: su un appezzamento o su tutta l'azienda.</span></div>`}</section>`;
+}
+function formSpesa(s={}){
+  openModal(`<form data-form="spesa" data-id="${s.id||''}">${dlgHead(s.id?'Modifica spesa':'Nuova spesa')}<div class="dlg-b"><div class="fg">
+   ${fld('Voce',`<select name="voce" id="f_voce">${opts(VOCI_SPESA,s.voce||VOCI_SPESA[0])}</select>`,'w2')}${fld('Data',inp('data',s.data||today(),'type="date" required'))}
+   ${fld('Importo (€)',inp('importo',s.importo,'required inputmode="decimal"'))}${fld('Appezzamento',`<select name="appId" id="f_appId"><option value="">Tutta l'azienda (diviso per ettari)</option>${appOpts(s.appId)}</select>`,'w2')}
+   ${fld('Note',`<textarea name="note" id="f_note">${esc(s.note||'')}</textarea>`,'wall')}</div></div>${dlgFoot()}</form>`,true);
+}
 
 /* ===================== avvio ===================== */
 async function init(){
